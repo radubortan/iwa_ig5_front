@@ -6,10 +6,14 @@
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
 <<<<<<< HEAD
+<<<<<<< HEAD
     "@mui/icons-material": "^5.10.14",
     "@mui/material": "^5.10.11",
     "@mui/x-date-pickers": "^5.0.6",
 =======
+=======
+    "@mui/icons-material": "^5.10.9",
+>>>>>>> bf0df47 (feat(): add navbar from radu)
     "@mui/material": "^5.10.13",
 >>>>>>> 7138f98 (feat(): add minimalistic view to test backend)
     "@testing-library/jest-dom": "^5.16.5",
