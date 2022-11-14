@@ -49,6 +49,8 @@ const SignupPage = () => {
     const [passwordValid, setPasswordValid] = useState(true);
     const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
 
+    const [errorMessage, setErrorMessage] = useState('');
+
     //checks if the value in the email field is valid and sets the error message in case it isn't
     const isEmailFieldValid = (email) => {
         if (isTextFieldEmpty(email)) {
@@ -142,28 +144,6 @@ const SignupPage = () => {
         }
     };
 
-    //returns if all the fiels are valid
-    const areFieldsValid = () => {
-        if (accountType === 'employer') {
-            return (
-                companyNameValid &&
-                addressValid &&
-                phoneNumberValid &&
-                emailValid &&
-                passwordValid
-            );
-        } else {
-            return (
-                firstNameValid &&
-                lastNameValid &&
-                birthdayValid &&
-                phoneNumberValid &&
-                emailValid &&
-                passwordValid
-            );
-        }
-    };
-
     //sets all fiels as valid
     const resetValidity = () => {
         setEmailValid(true);
@@ -177,14 +157,51 @@ const SignupPage = () => {
         setPasswordErrorMessage('');
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
+        setErrorMessage('');
         if (checkValidity()) {
             setIsLoading(true);
             if (accountType === 'employer') {
-                //request to employer api
+                try {
+                    await registrationService.registerEmployer(
+                        email,
+                        password,
+                        address,
+                        companyName,
+                        phoneNumber
+                    );
+                    //redirect to login page
+                } catch (error) {
+                    setIsLoading(false);
+                    const statusCode = error.response.status;
+                    if (statusCode === 409) {
+                        setErrorMessage("L'email est déjà pris");
+                    } else {
+                        setErrorMessage('Il y a eu un problème');
+                    }
+                }
             } else {
-                //request to candidate api
+                console.log(birthday);
+                try {
+                    await registrationService.registerCandidate(
+                        email,
+                        password,
+                        lastName,
+                        firstName,
+                        birthday,
+                        phoneNumber
+                    );
+                    //redirect to login page
+                } catch (error) {
+                    setIsLoading(false);
+                    const statusCode = error.response.status;
+                    if (statusCode === 409) {
+                        setErrorMessage("L'email est déjà pris");
+                    } else {
+                        setErrorMessage('Il y a eu un problème');
+                    }
+                }
             }
         }
     };
@@ -438,6 +455,7 @@ const SignupPage = () => {
                         fullWidth
                         variant='contained'
                         sx={{ mt: 3, mb: 2 }}
+                        disabled={isLoading}
                     >
                         Sign Up
                     </Button>
@@ -448,6 +466,7 @@ const SignupPage = () => {
                             </Link>
                         </Grid>
                     </Grid>
+                    {errorMessage.length > 0 && errorMessage}
                 </Box>
             </Box>
             {isLoading && <CircularProgress />}

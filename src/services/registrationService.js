@@ -23,4 +23,34 @@ export default {
                 });
         });
     },
+    registerCandidate: (
+        email,
+        password,
+        lastName,
+        firstName,
+        birthday,
+        phoneNumber
+    ) => {
+        return new Promise((resolve, reject) => {
+            axios({
+                method: 'post',
+                url: 'http://localhost:8080/api/registration/candidate',
+                header: {},
+                data: {
+                    email: email,
+                    password: password,
+                    lastName: lastName,
+                    firstName: firstName,
+                    birthday: birthday,
+                    phoneNumber: phoneNumber,
+                },
+            })
+                .then((response) => {
+                    resolve(response);
+                })
+                .catch((error) => {
+                    reject(error);
+                });
+        });
+    },
 };
