@@ -110,7 +110,7 @@ const Nav = () => {
                                         </Typography>
                                     </MenuItem>
                                 ))}
-                            {accountType == 'employer' &&
+                            {accountType === 'employer' &&
                                 pagesEmployer.map((page) => (
                                     <Button
                                         key={page}
@@ -170,7 +170,7 @@ const Nav = () => {
                                     {page}
                                 </Button>
                             ))}
-                        {accountType == 'employer' &&
+                        {accountType === 'employer' &&
                             pagesEmployer.map((page) => (
                                 <Button
                                     key={page}

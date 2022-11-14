@@ -1,13 +1,13 @@
 import './App.css';
 import Nav from './components/general/Nav';
-import LoginPage from './components/authentication/LoginPage';
 import SignupPage from './components/authentication/SignupPage';
+import LoginPage from './components/authentication/LoginPage';
 
 function App() {
     return (
         <div className='App'>
             <Nav />
-            {/* <LoginPage /> */}
+            <LoginPage />
             <SignupPage />
         </div>
     );

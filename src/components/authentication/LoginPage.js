@@ -65,10 +65,10 @@ const LoginPage = () => {
                         id='password'
                         autoComplete='current-password'
                     />
-                    <FormControlLabel
+                    {/* <FormControlLabel
                         control={<Checkbox value='remember' color='primary' />}
                         label='Se souvenir de moi'
-                    />
+                    /> */}
                     <Button
                         type='submit'
                         fullWidth
@@ -78,11 +78,11 @@ const LoginPage = () => {
                         Connexion
                     </Button>
                     <Grid container>
-                        <Grid item xs>
+                        {/* <Grid item xs>
                             <Link href='#' variant='body2'>
                                 Mot de passe oublié?
                             </Link>
-                        </Grid>
+                        </Grid> */}
                         <Grid item>
                             <Link href='#' variant='body2'>
                                 {'Créer un compte'}
