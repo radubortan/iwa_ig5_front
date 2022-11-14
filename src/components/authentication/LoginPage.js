@@ -13,8 +13,12 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { isTextFieldEmpty, isEmailValid } from '../../util/validation';
+import { CircularProgress } from '@mui/material';
 
 const LoginPage = () => {
+    //spinner state
+    const [isLoading, setIsLoading] = useState(false);
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -30,28 +34,29 @@ const LoginPage = () => {
         setPasswordValid(true);
     };
 
-    //returns if all the fiels are valid
-    const areFieldsValid = () => {
-        return emailValid && passwordValid;
-    };
-
-    //sets all fiels as valid
+    //sets the validity of the fiels and returns if all of them are valid
     const checkValidity = () => {
         resetValidity();
+
+        //needed because react updates state asynchronously
+        let emailV = true;
+        let passwordV = true;
+
         if (!isEmailFieldValid(email)) {
+            emailV = false;
             setEmailValid(false);
         }
         if (isTextFieldEmpty(password)) {
+            passwordV = false;
             setPasswordValid(false);
         }
+        return emailV && passwordV;
     };
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        checkValidity();
-        console.log(email);
-        console.log(password);
-        if (areFieldsValid()) {
+        if (checkValidity()) {
+            setIsLoading(true);
         }
     };
 
@@ -149,6 +154,7 @@ const LoginPage = () => {
                     </Grid>
                 </Box>
             </Box>
+            {isLoading && <CircularProgress />}
         </Container>
     );
 };

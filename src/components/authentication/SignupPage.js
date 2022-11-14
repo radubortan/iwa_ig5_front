@@ -16,8 +16,12 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import registrationService from '../../services/registrationService';
 import { isTextFieldEmpty, isEmailValid } from '../../util/validation';
+import { CircularProgress } from '@mui/material';
 
 const SignupPage = () => {
+    //spinner state
+    const [isLoading, setIsLoading] = useState(false);
+
     const [accountType, setAccountType] = useState('');
     const [email, setEmail] = useState('');
     const [firstName, setFirstName] = useState('');
@@ -75,32 +79,66 @@ const SignupPage = () => {
     //checks which fields are invalid
     const checkValidity = () => {
         resetValidity();
+
+        //needed because react updates state asynchronously
+        let companyNameV = true;
+        let addressV = true;
+        let birthdayV = true;
+        let firstNameV = true;
+        let lastNameV = true;
+        let emailV = true;
+        let phoneNumberV = true;
+        let passwordV = true;
+
         if (accountType === 'employer') {
             if (isTextFieldEmpty(companyName)) {
+                companyNameV = false;
                 setCompanyNameValid(false);
             }
             if (isTextFieldEmpty(address)) {
+                addressV = false;
                 setAddressValid(false);
             }
         } else {
             if (birthday === null) {
+                birthdayV = false;
                 setBirthdayValid(false);
             }
             if (isTextFieldEmpty(firstName)) {
+                firstNameV = false;
                 setFirstNameValid(false);
             }
             if (isTextFieldEmpty(lastName)) {
+                lastNameV = true;
                 setLastNameValid(false);
             }
         }
         if (!isEmailFieldValid(email)) {
+            emailV = false;
             setEmailValid(false);
         }
         if (isTextFieldEmpty(phoneNumber)) {
+            phoneNumberV = false;
             setPhoneNumberValid(false);
         }
         if (!isPasswordValid()) {
+            passwordV = false;
             setPasswordValid(false);
+        }
+
+        if (accountType === 'employer') {
+            return (
+                companyNameV && addressV && phoneNumberV && emailV && passwordV
+            );
+        } else {
+            return (
+                firstNameV &&
+                lastNameV &&
+                birthdayV &&
+                phoneNumberV &&
+                emailV &&
+                passwordV
+            );
         }
     };
 
@@ -141,8 +179,8 @@ const SignupPage = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        checkValidity();
-        if (areFieldsValid()) {
+        if (checkValidity()) {
+            setIsLoading(true);
             if (accountType === 'employer') {
                 //request to employer api
             } else {
@@ -412,6 +450,7 @@ const SignupPage = () => {
                     </Grid>
                 </Box>
             </Box>
+            {isLoading && <CircularProgress />}
         </Container>
     );
 };
