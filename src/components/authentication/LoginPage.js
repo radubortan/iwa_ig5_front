@@ -13,7 +13,8 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { isTextFieldEmpty, isEmailValid } from '../../util/validation';
-import { CircularProgress } from '@mui/material';
+import { Alert, CircularProgress } from '@mui/material';
+import loginService from '../../services/loginService';
 
 const LoginPage = () => {
     //spinner state
@@ -27,6 +28,8 @@ const LoginPage = () => {
     //email error state
     const [emailValid, setEmailValid] = useState(true);
     const [emailErrorMessage, setEmailErrorMessage] = useState('');
+
+    const [errorMessage, setErrorMessage] = useState('');
 
     //checks which fields are invalid
     const resetValidity = () => {
@@ -53,10 +56,18 @@ const LoginPage = () => {
         return emailV && passwordV;
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         if (checkValidity()) {
             setIsLoading(true);
+            try {
+                const data = await loginService.loginUser(email, password);
+                //add data to local storage
+                //redirect to main page
+            } catch (error) {
+                setIsLoading(false);
+                setErrorMessage("L'email ou le mot de passe est incorrect");
+            }
         }
     };
 
@@ -137,9 +148,15 @@ const LoginPage = () => {
                         fullWidth
                         variant='contained'
                         sx={{ mt: 3, mb: 2 }}
+                        disabled={isLoading}
                     >
                         Connexion
                     </Button>
+                    {errorMessage.length > 0 && (
+                        <Alert sx={{ mb: 1 }} severity='error'>
+                            {errorMessage}
+                        </Alert>
+                    )}
                     <Grid container>
                         {/* <Grid item xs>
                             <Link href='#' variant='body2'>

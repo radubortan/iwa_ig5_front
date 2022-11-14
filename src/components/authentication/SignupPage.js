@@ -16,7 +16,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import registrationService from '../../services/registrationService';
 import { isTextFieldEmpty, isEmailValid } from '../../util/validation';
-import { CircularProgress } from '@mui/material';
+import { Alert, CircularProgress } from '@mui/material';
 
 const SignupPage = () => {
     //spinner state
@@ -182,7 +182,6 @@ const SignupPage = () => {
                     }
                 }
             } else {
-                console.log(birthday);
                 try {
                     await registrationService.registerCandidate(
                         email,
@@ -459,6 +458,11 @@ const SignupPage = () => {
                     >
                         Sign Up
                     </Button>
+                    {errorMessage.length > 0 && (
+                        <Alert sx={{ mb: 1 }} severity='error'>
+                            {errorMessage}
+                        </Alert>
+                    )}
                     <Grid container justifyContent='center'>
                         <Grid item>
                             <Link href='#' variant='body2'>
@@ -466,7 +470,6 @@ const SignupPage = () => {
                             </Link>
                         </Grid>
                     </Grid>
-                    {errorMessage.length > 0 && errorMessage}
                 </Box>
             </Box>
             {isLoading && <CircularProgress />}
