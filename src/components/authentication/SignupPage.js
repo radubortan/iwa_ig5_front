@@ -72,8 +72,9 @@ const SignupPage = () => {
         return true;
     };
 
+    //checks which fields are invalid
     const checkValidity = () => {
-        resetValid();
+        resetValidity();
         if (accountType === 'employer') {
             if (isTextFieldEmpty(companyName)) {
                 setCompanyNameValid(false);
@@ -103,6 +104,7 @@ const SignupPage = () => {
         }
     };
 
+    //returns if all the fiels are valid
     const areFieldsValid = () => {
         if (accountType === 'employer') {
             return (
@@ -124,7 +126,8 @@ const SignupPage = () => {
         }
     };
 
-    const resetValid = () => {
+    //sets all fiels as valid
+    const resetValidity = () => {
         setEmailValid(true);
         setFirstNameValid(true);
         setLastNameValid(true);
@@ -179,7 +182,7 @@ const SignupPage = () => {
                                     value={accountType}
                                     label='Vous êtes'
                                     onChange={(event) => {
-                                        resetValid();
+                                        resetValidity();
                                         setAccountType(event.target.value);
                                     }}
                                 >

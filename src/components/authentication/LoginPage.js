@@ -5,21 +5,65 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
+import { useState } from 'react';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import { isTextFieldEmpty, isEmailValid } from '../../util/validation';
 
 const LoginPage = () => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const [passwordValid, setPasswordValid] = useState(true);
+
+    //email error state
+    const [emailValid, setEmailValid] = useState(true);
+    const [emailErrorMessage, setEmailErrorMessage] = useState('');
+
+    //checks which fields are invalid
+    const resetValidity = () => {
+        setEmailValid(true);
+        setPasswordValid(true);
+    };
+
+    //returns if all the fiels are valid
+    const areFieldsValid = () => {
+        return emailValid && passwordValid;
+    };
+
+    //sets all fiels as valid
+    const checkValidity = () => {
+        resetValidity();
+        if (!isEmailFieldValid(email)) {
+            setEmailValid(false);
+        }
+        if (isTextFieldEmpty(password)) {
+            setPasswordValid(false);
+        }
+    };
+
     const handleSubmit = (event) => {
         event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
+        checkValidity();
+        console.log(email);
+        console.log(password);
+        if (areFieldsValid()) {
+        }
+    };
+
+    //checks if the value in the email field is valid and sets the error message in case it isn't
+    const isEmailFieldValid = (email) => {
+        if (isTextFieldEmpty(email)) {
+            setEmailErrorMessage('Le champ ne peut pas être vide');
+            return false;
+        }
+        const regexEvaluation = isEmailValid(email);
+        setEmailErrorMessage(regexEvaluation.message);
+        return regexEvaluation.validity;
     };
 
     return (
@@ -46,6 +90,8 @@ const LoginPage = () => {
                     sx={{ mt: 1 }}
                 >
                     <TextField
+                        error={!emailValid}
+                        helperText={emailErrorMessage}
                         margin='normal'
                         required
                         fullWidth
@@ -54,8 +100,17 @@ const LoginPage = () => {
                         name='email'
                         autoComplete='email'
                         autoFocus
+                        onChange={(event) => {
+                            setEmail(event.target.value);
+                        }}
                     />
                     <TextField
+                        error={!passwordValid}
+                        helperText={
+                            !passwordValid
+                                ? 'Le champ ne peut pas être vide'
+                                : ''
+                        }
                         margin='normal'
                         required
                         fullWidth
@@ -64,6 +119,9 @@ const LoginPage = () => {
                         type='password'
                         id='password'
                         autoComplete='current-password'
+                        onChange={(event) => {
+                            setPassword(event.target.value);
+                        }}
                     />
                     {/* <FormControlLabel
                         control={<Checkbox value='remember' color='primary' />}
