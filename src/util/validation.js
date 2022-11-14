@@ -1,12 +1,15 @@
-export function isTextFieldEmpty(string) {
-    return String(string).trim().length === 0;
+//checks if the content of a textfield is empty
+export function isTextFieldEmpty(content) {
+    return String(content).trim().length === 0;
 }
 
-export function isEmailValid(email) {
+//checks if email is valid and return a boolean and an error message
+export const isEmailValid = (email) => {
     const validRegex =
-        /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+        /^(?=.{1,64}@)[A-Za-z0-9_-]+(\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*(\.[A-Za-z]{2,})$/;
+
     if (email.match(validRegex)) {
-        return true;
+        return { validity: true, message: '' };
     }
-    return false;
-}
+    return { validity: false, message: 'Email invalide' };
+};

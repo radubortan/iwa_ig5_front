@@ -30,7 +30,6 @@ const SignupPage = () => {
     // contains a Date object
     const [birthday, setBirthday] = useState(null);
 
-    const [emailValid, setEmailValid] = useState(true);
     const [firstNameValid, setFirstNameValid] = useState(true);
     const [lastNameValid, setLastNameValid] = useState(true);
     const [phoneNumberValid, setPhoneNumberValid] = useState(true);
@@ -38,9 +37,26 @@ const SignupPage = () => {
     const [addressValid, setAddressValid] = useState(true);
     const [birthdayValid, setBirthdayValid] = useState(true);
 
+    //email error state
+    const [emailValid, setEmailValid] = useState(true);
+    const [emailErrorMessage, setEmailErrorMessage] = useState('');
+
+    //password error state
     const [passwordValid, setPasswordValid] = useState(true);
     const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
 
+    //checks if the value in the email field is valid and sets the error message in case it isn't
+    const isEmailFieldValid = (email) => {
+        if (isTextFieldEmpty(email)) {
+            setEmailErrorMessage('Le champ ne peut pas être vide');
+            return false;
+        }
+        const regexEvaluation = isEmailValid(email);
+        setEmailErrorMessage(regexEvaluation.message);
+        return regexEvaluation.validity;
+    };
+
+    //checks if the password is valid and set the error message in case it isn't
     const isPasswordValid = () => {
         if (isTextFieldEmpty(password) || isTextFieldEmpty(confirmPassword)) {
             setPasswordErrorMessage('Le champ ne peut pas être vide');
@@ -52,6 +68,7 @@ const SignupPage = () => {
             setPasswordErrorMessage('Le mot de passe est trop court');
             return false;
         }
+        setPasswordErrorMessage('');
         return true;
     };
 
@@ -74,6 +91,9 @@ const SignupPage = () => {
             if (isTextFieldEmpty(lastName)) {
                 setLastNameValid(false);
             }
+        }
+        if (!isEmailFieldValid(email)) {
+            setEmailValid(false);
         }
         if (isTextFieldEmpty(phoneNumber)) {
             setPhoneNumberValid(false);
@@ -178,6 +198,11 @@ const SignupPage = () => {
                                 <Grid item xs={12}>
                                     <TextField
                                         error={!companyNameValid}
+                                        helperText={
+                                            !companyNameValid
+                                                ? 'Le champ ne peut pas être vide'
+                                                : ''
+                                        }
                                         required
                                         fullWidth
                                         id='companyName'
@@ -191,6 +216,11 @@ const SignupPage = () => {
                                 <Grid item xs={12}>
                                     <TextField
                                         error={!addressValid}
+                                        helperText={
+                                            !addressValid
+                                                ? 'Le champ ne peut pas être vide'
+                                                : ''
+                                        }
                                         required
                                         fullWidth
                                         id='address'
@@ -209,6 +239,11 @@ const SignupPage = () => {
                                 <Grid item xs={12} sm={6}>
                                     <TextField
                                         error={!firstNameValid}
+                                        helperText={
+                                            !firstNameValid
+                                                ? 'Le champ ne peut pas être vide'
+                                                : ''
+                                        }
                                         autoComplete='given-name'
                                         name='firstName'
                                         required
@@ -225,6 +260,11 @@ const SignupPage = () => {
                                 <Grid item xs={12} sm={6}>
                                     <TextField
                                         error={!lastNameValid}
+                                        helperText={
+                                            !lastNameValid
+                                                ? 'Le champ ne peut pas être vide'
+                                                : ''
+                                        }
                                         required
                                         fullWidth
                                         id='lastName'
@@ -252,9 +292,31 @@ const SignupPage = () => {
                                                 <TextField
                                                     {...params}
                                                     fullWidth
+                                                    style={{
+                                                        borderRadius: '5px',
+                                                        backgroundColor:
+                                                            !birthdayValid &&
+                                                            '##ffe3e3',
+                                                    }}
                                                 />
                                             )}
                                         />
+                                        {!birthdayValid && (
+                                            <p
+                                                style={{
+                                                    color: 'red',
+                                                    fontSize: '0.75rem',
+                                                    color: '#d32f2f',
+                                                    textAlign: 'left',
+                                                    paddingLeft: '14px',
+                                                    marginTop: '3px',
+                                                    fontFamily: 'Helvetica',
+                                                    marginBottom: '0',
+                                                }}
+                                            >
+                                                Le champ ne peut pas être vide
+                                            </p>
+                                        )}
                                     </LocalizationProvider>
                                 </Grid>
                             </>
@@ -265,6 +327,11 @@ const SignupPage = () => {
                                 <Grid item xs={12}>
                                     <TextField
                                         error={!phoneNumberValid}
+                                        helperText={
+                                            !phoneNumberValid
+                                                ? 'Le champ ne peut pas être vide'
+                                                : ''
+                                        }
                                         required
                                         fullWidth
                                         id='phoneNumber'
@@ -278,6 +345,7 @@ const SignupPage = () => {
                                 <Grid item xs={12}>
                                     <TextField
                                         error={!emailValid}
+                                        helperText={emailErrorMessage}
                                         required
                                         fullWidth
                                         id='email'
