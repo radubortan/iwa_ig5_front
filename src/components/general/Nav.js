@@ -12,6 +12,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import WorkIcon from '@mui/icons-material/Work';
+import { Link as ReactLink } from 'react-router-dom';
 
 const pagesCandidate = ['Offres', 'Mes candidatures', 'Notifications'];
 const pagesEmployer = ['Mes Offres'];
@@ -47,22 +48,22 @@ const Nav = () => {
                     <WorkIcon
                         sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }}
                     />
-                    <Typography
-                        variant='h6'
-                        noWrap
-                        component='a'
-                        href='/'
-                        sx={{
-                            mr: 2,
-                            display: { xs: 'none', md: 'flex' },
-                            // fontFamily: 'monospace',
-                            fontWeight: 700,
-                            color: 'inherit',
-                            textDecoration: 'none',
-                        }}
-                    >
-                        FSB
-                    </Typography>
+                    <ReactLink style={{ textDecoration: 'none' }} to='/'>
+                        <Typography
+                            variant='h6'
+                            noWrap
+                            sx={{
+                                mr: 2,
+                                display: { xs: 'none', md: 'flex' },
+                                // fontFamily: 'monospace',
+                                fontWeight: 700,
+                                color: 'inherit',
+                                textDecoration: 'none',
+                            }}
+                        >
+                            FSB
+                        </Typography>
+                    </ReactLink>
 
                     {/* nev elements mobile */}
                     <Box
@@ -131,11 +132,11 @@ const Nav = () => {
                     <WorkIcon
                         sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }}
                     />
+
                     <Typography
                         variant='h5'
                         noWrap
                         component='a'
-                        href=''
                         sx={{
                             mr: 2,
                             display: { xs: 'flex', md: 'none' },
@@ -146,7 +147,9 @@ const Nav = () => {
                             textDecoration: 'none',
                         }}
                     >
-                        FSB
+                        <ReactLink style={{ textDecoration: 'none' }} to='/'>
+                            FSB
+                        </ReactLink>
                     </Typography>
 
                     {/* nav elements full screen */}

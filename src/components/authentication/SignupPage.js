@@ -17,8 +17,11 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import registrationService from '../../services/registrationService';
 import { isTextFieldEmpty, isEmailValid } from '../../util/validation';
 import { Alert, CircularProgress } from '@mui/material';
+import { Link as RouterLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-const SignupPage = () => {
+const SignupPage = (props) => {
+    const navigate = useNavigate();
     //spinner state
     const [isLoading, setIsLoading] = useState(false);
 
@@ -171,7 +174,7 @@ const SignupPage = () => {
                         companyName,
                         phoneNumber
                     );
-                    //redirect to login page
+                    navigate('/login');
                 } catch (error) {
                     setIsLoading(false);
                     const statusCode = error.response.status;
@@ -191,7 +194,7 @@ const SignupPage = () => {
                         birthday,
                         phoneNumber
                     );
-                    //redirect to login page
+                    navigate('/login');
                 } catch (error) {
                     setIsLoading(false);
                     const statusCode = error.response.status;
@@ -361,7 +364,6 @@ const SignupPage = () => {
                                         {!birthdayValid && (
                                             <p
                                                 style={{
-                                                    color: 'red',
                                                     fontSize: '0.75rem',
                                                     color: '#d32f2f',
                                                     textAlign: 'left',
@@ -465,7 +467,11 @@ const SignupPage = () => {
                     )}
                     <Grid container justifyContent='center'>
                         <Grid item>
-                            <Link href='#' variant='body2'>
+                            <Link
+                                variant='body2'
+                                to='/login'
+                                component={RouterLink}
+                            >
                                 Already have an account? Sign in
                             </Link>
                         </Grid>

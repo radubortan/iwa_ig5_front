@@ -7,6 +7,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { useState } from 'react';
 import Link from '@mui/material/Link';
+import { Link as RouterLink, Navigate } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -15,8 +16,13 @@ import Container from '@mui/material/Container';
 import { isTextFieldEmpty, isEmailValid } from '../../util/validation';
 import { Alert, CircularProgress } from '@mui/material';
 import loginService from '../../services/loginService';
+import { useNavigate } from 'react-router-dom';
+import { useUser } from '../../context/UserContext';
 
-const LoginPage = () => {
+const LoginPage = (props) => {
+    const user = useUser();
+    const navigate = useNavigate();
+
     //spinner state
     const [isLoading, setIsLoading] = useState(false);
 
@@ -62,8 +68,10 @@ const LoginPage = () => {
             setIsLoading(true);
             try {
                 const data = await loginService.loginUser(email, password);
-                //add data to local storage
-                //redirect to main page
+                user.setAccountType(data.accountType);
+                user.setAccessToken(data.accessToken);
+                user.setAccountId(data.accountId);
+                navigate('/');
             } catch (error) {
                 setIsLoading(false);
                 setErrorMessage("L'email ou le mot de passe est incorrect");
@@ -164,7 +172,11 @@ const LoginPage = () => {
                             </Link>
                         </Grid> */}
                         <Grid item>
-                            <Link href='#' variant='body2'>
+                            <Link
+                                to='/signup'
+                                component={RouterLink}
+                                variant='body2'
+                            >
                                 {'Créer un compte'}
                             </Link>
                         </Grid>
