@@ -3,11 +3,9 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import { useState } from 'react';
 import Link from '@mui/material/Link';
-import { Link as RouterLink, Navigate } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -71,6 +69,7 @@ const LoginPage = (props) => {
                 user.setAccountType(data.accountType);
                 user.setAccessToken(data.accessToken);
                 user.setAccountId(data.accountId);
+                user.setStorageAccountType(data.accountType);
                 navigate('/');
             } catch (error) {
                 setIsLoading(false);

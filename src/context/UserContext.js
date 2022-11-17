@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from 'react';
+import useLocalStorage from '../hooks/useLocalStorage';
 
 const UserContext = createContext();
 
@@ -7,7 +8,12 @@ export const useUser = () => {
 };
 
 export const UserProvider = ({ children }) => {
-    const [accountType, setAccountType] = useState('');
+    //gives acces to the account type stored in local storage
+    const [storageAccountType, setStorageAccountType] =
+        useLocalStorage('accountType');
+
+    //account type is initialised to the value saved in local storage
+    const [accountType, setAccountType] = useState(storageAccountType);
     const [accessToken, setAccessToken] = useState('');
     const [accountId, setAccountId] = useState('');
 
@@ -18,6 +24,7 @@ export const UserProvider = ({ children }) => {
         setAccountType,
         accountId,
         setAccountId,
+        setStorageAccountType,
     };
 
     return (
