@@ -22,11 +22,15 @@ const useLocalStorage = (key, initialValue) => {
         }
     });
 
+    const deleteValue = () => {
+        localStorage.removeItem(prefixedKey);
+    };
+
     useEffect(() => {
         localStorage.setItem(prefixedKey, JSON.stringify(value));
     }, [prefixedKey, value]);
 
-    return [value, setValue];
+    return [value, setValue, deleteValue];
 };
 
 export default useLocalStorage;

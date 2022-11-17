@@ -13,13 +13,14 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import WorkIcon from '@mui/icons-material/Work';
 import { Link as ReactLink } from 'react-router-dom';
+import { useUser } from '../../context/UserContext';
 
 const pagesCandidate = ['Offres', 'Mes candidatures', 'Notifications'];
 const pagesEmployer = ['Mes Offres'];
 const settings = ['Mon Profil', 'Paramètres', 'Déconnexion'];
 
 const Nav = () => {
-    const isLoggedIn = true;
+    const user = useUser();
     const accountType = 'candidate';
 
     const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -189,14 +190,14 @@ const Nav = () => {
                     </Box>
 
                     {/* dropdown menu on the right */}
-                    {!isLoggedIn && (
+                    {user.accountType && (
                         <Box sx={{ flexGrow: 0 }}>
                             <Tooltip title='Open settings'>
                                 <IconButton
                                     onClick={handleOpenUserMenu}
                                     sx={{ p: 0 }}
                                 >
-                                    <Avatar alt='Remy Sharp' />
+                                    <Avatar alt='profile icon' />
                                 </IconButton>
                             </Tooltip>
                             <Menu
@@ -215,16 +216,11 @@ const Nav = () => {
                                 open={Boolean(anchorElUser)}
                                 onClose={handleCloseUserMenu}
                             >
-                                {settings.map((setting) => (
-                                    <MenuItem
-                                        key={setting}
-                                        onClick={handleCloseUserMenu}
-                                    >
-                                        <Typography textAlign='center'>
-                                            {setting}
-                                        </Typography>
-                                    </MenuItem>
-                                ))}
+                                <MenuItem onClick={() => user.signOut()}>
+                                    <Typography textAlign='center'>
+                                        Déconnexion
+                                    </Typography>
+                                </MenuItem>
                             </Menu>
                         </Box>
                     )}
