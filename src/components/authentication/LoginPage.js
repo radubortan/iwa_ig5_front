@@ -67,9 +67,13 @@ const LoginPage = (props) => {
             try {
                 const data = await loginService.loginUser(email, password);
                 user.setAccountType(data.accountType);
-                user.setAccessToken(data.accessToken);
-                user.setAccountId(data.accountId);
                 user.setStorageAccountType(data.accountType);
+
+                user.setAccessToken(data.accessToken);
+                user.setStorageAccessToken(data.accessToken);
+
+                user.setAccountId(data.accountId);
+                user.setStorageAccountId(data.accountId);
                 navigate('/');
             } catch (error) {
                 setIsLoading(false);
