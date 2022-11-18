@@ -9,6 +9,12 @@ const getCurrentUserId = (accountType, accessToken) => {
             }/id`,
             headers: { Authorization: `Bearer ${accessToken}` },
             data: {},
+            //needed to make sure that the received id is a string otherwise it wouldn't fit into a javascript number and it would get rounded up
+            transformResponse: [
+                (data) => {
+                    return data.toString();
+                },
+            ],
         })
             .then((response) => {
                 resolve(response.data);

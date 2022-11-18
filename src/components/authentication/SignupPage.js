@@ -342,6 +342,7 @@ const SignupPage = (props) => {
                                         dateAdapter={AdapterDayjs}
                                     >
                                         <DatePicker
+                                            inputFormat='DD/MM/YYYY'
                                             error
                                             label='Date de naissance'
                                             value={birthday}

@@ -12,16 +12,15 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import WorkIcon from '@mui/icons-material/Work';
-import { Link as ReactLink } from 'react-router-dom';
+import { Link as ReactLink, useNavigate } from 'react-router-dom';
 import { useUser } from '../../context/UserContext';
 
 const pagesCandidate = ['Offres', 'Mes candidatures', 'Notifications'];
 const pagesEmployer = ['Mes Offres'];
-const settings = ['Mon Profil', 'Paramètres', 'Déconnexion'];
 
 const Nav = () => {
     const user = useUser();
-    const accountType = 'candidate';
+    const navigate = useNavigate();
 
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -101,21 +100,17 @@ const Nav = () => {
                                 display: { xs: 'block', md: 'none' },
                             }}
                         >
-                            {accountType === 'candidate' &&
+                            {user.accountType === 'candidate' &&
                                 pagesCandidate.map((page) => (
-                                    <MenuItem
-                                        key={page}
-                                        onClick={handleCloseNavMenu}
-                                    >
+                                    <MenuItem onClick={handleCloseNavMenu}>
                                         <Typography textAlign='center'>
                                             {page}
                                         </Typography>
                                     </MenuItem>
                                 ))}
-                            {accountType === 'employer' &&
+                            {user.accountType === 'employer' &&
                                 pagesEmployer.map((page) => (
                                     <Button
-                                        key={page}
                                         onClick={handleCloseNavMenu}
                                         sx={{
                                             my: 2,
@@ -159,10 +154,9 @@ const Nav = () => {
                             display: { xs: 'none', md: 'flex' },
                         }}
                     >
-                        {accountType === 'candidate' &&
+                        {user.accountType === 'candidate' &&
                             pagesCandidate.map((page) => (
                                 <Button
-                                    key={page}
                                     onClick={handleCloseNavMenu}
                                     sx={{
                                         my: 2,
@@ -173,10 +167,9 @@ const Nav = () => {
                                     {page}
                                 </Button>
                             ))}
-                        {accountType === 'employer' &&
+                        {user.accountType === 'employer' &&
                             pagesEmployer.map((page) => (
                                 <Button
-                                    key={page}
                                     onClick={handleCloseNavMenu}
                                     sx={{
                                         my: 2,
@@ -192,7 +185,7 @@ const Nav = () => {
                     {/* dropdown menu on the right */}
                     {user.accountType && (
                         <Box sx={{ flexGrow: 0 }}>
-                            <Tooltip title='Open settings'>
+                            <Tooltip title='Open user menu'>
                                 <IconButton
                                     onClick={handleOpenUserMenu}
                                     sx={{ p: 0 }}
@@ -216,7 +209,34 @@ const Nav = () => {
                                 open={Boolean(anchorElUser)}
                                 onClose={handleCloseUserMenu}
                             >
-                                <MenuItem onClick={() => user.signOut()}>
+                                <MenuItem>
+                                    <Typography
+                                        textAlign='center'
+                                        onClick={() => {
+                                            navigate(
+                                                `/profile/${user.accountId}`
+                                            );
+                                        }}
+                                    >
+                                        Mon profil
+                                    </Typography>
+                                </MenuItem>
+                                <MenuItem>
+                                    <Typography
+                                        textAlign='center'
+                                        onClick={() =>
+                                            navigate('/profile/edit')
+                                        }
+                                    >
+                                        Paramètres
+                                    </Typography>
+                                </MenuItem>
+                                <MenuItem
+                                    onClick={() => {
+                                        user.signOut();
+                                        navigate('/');
+                                    }}
+                                >
                                     <Typography textAlign='center'>
                                         Déconnexion
                                     </Typography>

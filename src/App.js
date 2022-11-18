@@ -6,6 +6,8 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { useUser } from './context/UserContext';
 import Home from './components/general/Home';
 import NotFound from './components/general/NotFound';
+import Profile from './components/profile/Profile';
+import ProfileEdit from './components/profile/ProfileEdit';
 
 function App() {
     const user = useUser();
@@ -35,6 +37,8 @@ function App() {
                         user.accountType ? <Navigate to='/' /> : <SignupPage />
                     }
                 />
+                <Route path='/profile/:id' element={<Profile />} />
+                <Route path='/profile/edit' element={<ProfileEdit />} />
                 <Route path='*' element={<NotFound />} />
             </Routes>
         </div>

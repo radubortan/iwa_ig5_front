@@ -32,6 +32,8 @@ export default {
         phoneNumber
     ) => {
         return new Promise((resolve, reject) => {
+            const modifiedDate = birthday.toDate();
+            modifiedDate.setDate(modifiedDate.getDate() + 1);
             axios({
                 method: 'post',
                 url: 'http://localhost:8080/api/registration/candidate',
@@ -41,7 +43,7 @@ export default {
                     password: password,
                     lastName: lastName,
                     firstName: firstName,
-                    birthday: birthday,
+                    birthday: modifiedDate,
                     phoneNumber: phoneNumber,
                 },
             })
