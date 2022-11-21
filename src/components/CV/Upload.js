@@ -2,6 +2,7 @@ import Button from '@mui/material/Button';
 import { TextField } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 import axios from 'axios';
 import { useEffect, useState } from 'react';
@@ -17,6 +18,7 @@ const Upload = () => {
     const [fileURLCV, setFileURLCV] = useState();
 
     useEffect(() => {
+        //A changer avec un appel d'un service qui retourne le nom du fichier associé à l'id du profil
         fetchCV("CV_Vincent_Baret.pdf");
     })
 
@@ -76,7 +78,7 @@ const Upload = () => {
                 <div style={{ marginTop: '8em' }}>
                     {uploaded === false ? <Button variant="contained" component="label">
                         Importer mon CV
-                        <input onChange={handleChangeFile} hidden accept="*" multiple type="file" />
+                        <input onChange={handleChangeFile} hidden accept="application/pdf" multiple type="file" />
                     </Button> : <p style={{ color: 'green', fontSize: '20px' }}>Le téléchargement de votre CV a réussi !</p>}
 
                     {displayError === true && <p style={{ color: 'red', fontSize: '20px' }}>Une erreur est survenue, merci de réessayer.</p>}
@@ -99,6 +101,13 @@ const Upload = () => {
                 alignItems: 'center'
             }}>
                 <Button onClick={() => {window.open(fileURLCV)}} style={{ marginTop: '8em' }} variant="contained" component="label">Voir mon CV</Button>
+                <Button 
+                    variant="outlined"
+                    startIcon={<DeleteIcon />}
+                    style={{marginTop: '4em', color: 'red', borderColor: 'red'}}
+                    >
+                        Supprimer mon CV
+                </Button>
             </div>
         )
     }
