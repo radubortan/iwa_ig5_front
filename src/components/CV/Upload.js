@@ -14,13 +14,15 @@ const Upload = () => {
     const [displayError, setDisplayError] = useState(false);
 
     //If a job seeker already uploaded a CV
+    const [nameFileCV, setNameFileCV] = useState("");
     const [cvExist, setCvExist] = useState(false);
     const [fileURLCV, setFileURLCV] = useState();
 
     useEffect(() => {
         //A changer avec un appel d'un service qui retourne le nom du fichier associé à l'id du profil
-        fetchCV("CV_Vincent_Baret.pdf");
-    })
+        setNameFileCV("CV_Vincent_Baret.pdf");
+        fetchCV(nameFileCV);
+    }, [nameFileCV])
 
     const handleChangeFile = (event) => {
         event.preventDefault();
@@ -37,6 +39,7 @@ const Upload = () => {
                     setDisplayError(false);
                     setUploaded(true);
                     setCvExist(true);
+                    fetchCV(file.name);
                 }
             })
             .catch(err => {
@@ -61,6 +64,18 @@ const Upload = () => {
             })
     }
 
+    function deleteCV() {
+        console.log(nameFileCV);
+        axios.get(`http://localhost:8080/cv-delete?fileName=${nameFileCV}`)
+            .then(res => {
+                console.log(res.data);
+                setUploaded(false);
+                setCvExist(false);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
 
     if (loading) {
         return (
@@ -102,6 +117,7 @@ const Upload = () => {
             }}>
                 <Button onClick={() => {window.open(fileURLCV)}} style={{ marginTop: '8em' }} variant="contained" component="label">Voir mon CV</Button>
                 <Button 
+                    onClick={() => deleteCV()}
                     variant="outlined"
                     startIcon={<DeleteIcon />}
                     style={{marginTop: '4em', color: 'red', borderColor: 'red'}}
