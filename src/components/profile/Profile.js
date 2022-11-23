@@ -3,7 +3,8 @@ import { useUser } from '../../context/UserContext';
 import userService from '../../services/userService';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Card, Container, Typography, Box, Button } from '@mui/material';
-import { convertDate } from '../../util/date';
+import { convertEpochDate } from '../../util/date';
+import RatingsContainer from '../ratings/RatingsContainer';
 
 const Profile = () => {
     const navigate = useNavigate();
@@ -47,10 +48,17 @@ const Profile = () => {
 
     useEffect(() => {
         fetchProfileInfo();
-    }, []);
+    }, [id]);
 
     return (
-        <Container sx={{ mt: 5 }}>
+        <Container
+            sx={{
+                mt: 5,
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '50px',
+            }}
+        >
             <Card
                 sx={{
                     p: 5,
@@ -82,7 +90,7 @@ const Profile = () => {
                     </Typography>
                     {profile.role === 'ROLE_CANDIDATE' && (
                         <Typography variant='p' gutterBottom>
-                            {`Date de naissance : ${convertDate(
+                            {`Date de naissance : ${convertEpochDate(
                                 Date.parse(profile.birthday)
                             )}`}
                         </Typography>
@@ -125,6 +133,8 @@ const Profile = () => {
                     )}
                 </Box>
             </Card>
+
+            <RatingsContainer role={profile.role} />
         </Container>
     );
 };
