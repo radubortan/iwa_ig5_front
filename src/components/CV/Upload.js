@@ -32,7 +32,8 @@ const Upload = () => {
         const file = event.target.files[0];
         formData.append("file", file);
 
-        axios.post(`http://localhost:8080/cv-upload`, formData)
+        // ID à remplacer
+        axios.post(`http://localhost:8080/cv-upload/${12}`, formData)
             .then(res => {
                 if (res.data) {
                     setLoading(false);
@@ -66,7 +67,8 @@ const Upload = () => {
 
     function deleteCV() {
         console.log(nameFileCV);
-        axios.get(`http://localhost:8080/cv-delete?fileName=${nameFileCV}`)
+        // Changer l'ID
+        axios.get(`http://localhost:8080/cv-delete/${12}?fileName=${nameFileCV}`)
             .then(res => {
                 console.log(res.data);
                 setUploaded(false);
