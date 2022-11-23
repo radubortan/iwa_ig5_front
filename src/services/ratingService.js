@@ -62,7 +62,7 @@ export default {
 
         await Promise.all(
             ratings.map(async (rating) => {
-                const sender = await userService.getCandidateById(
+                const sender = await userService.getEmployerById(
                     rating.idSender,
                     accessToken
                 );

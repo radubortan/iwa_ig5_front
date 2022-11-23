@@ -99,9 +99,12 @@ const RatingsContainer = (props) => {
 
     //fetch the data when the component first loads
     useEffect(() => {
+        setMyRating(null);
         fetchRatings();
-        fetchMyRating();
-    }, [id]);
+        if (id !== user.accountId) {
+            fetchMyRating();
+        }
+    }, [id, props.role]);
 
     //when a new rating is added, recompute the average
     useEffect(() => {
@@ -138,7 +141,8 @@ const RatingsContainer = (props) => {
                 <Typography variant='h4' sx={{ alignSelf: 'flex-start' }}>
                     Ratings
                 </Typography>
-                {ratings.length !== 0 && !myRating && (
+
+                {(ratings.length !== 0 || myRating) && (
                     <Box
                         sx={{
                             px: '10px',
@@ -152,9 +156,7 @@ const RatingsContainer = (props) => {
                         </Typography>
                     </Box>
                 )}
-
-                {/* only to be shown if the i have worked for the user or if they've worked for me */}
-                {myRating ? (
+                {user.accountId !== id && myRating && (
                     <Button
                         variant='contained'
                         onClick={() => {
@@ -163,7 +165,8 @@ const RatingsContainer = (props) => {
                     >
                         My rating
                     </Button>
-                ) : (
+                )}
+                {user.accountId !== id && !myRating && (
                     <Button
                         variant='contained'
                         onClick={() => {
@@ -183,15 +186,16 @@ const RatingsContainer = (props) => {
                     gap: '50px',
                 }}
             >
-                {ratings.map((rating) => {
-                    return (
-                        <Rating
-                            rating={rating}
-                            role={props.role}
-                            key={rating.id}
-                        />
-                    );
-                })}
+                {ratings &&
+                    ratings.map((rating) => {
+                        return (
+                            <Rating
+                                rating={rating}
+                                role={props.role}
+                                key={rating.id}
+                            />
+                        );
+                    })}
             </Box>
         </Box>
     );

@@ -27,11 +27,15 @@ const Rating = (props) => {
                 }}
             >
                 <Typography style={{ fontSize: '1.2rem' }}>
-                    {role === 'ROLE_EMPLOYER'
-                        ? `${rating.sender.firstName} ${rating.sender.lastName}`
-                        : `${rating.sender.companyName}`}
+                    {rating.sender.firstName &&
+                        role == 'ROLE_EMPLOYER' &&
+                        `${rating.sender.firstName} ${rating.sender.lastName}`}
+                    {rating.sender.companyName &&
+                        role === 'ROLE_CANDIDATE' &&
+                        `${rating.sender.companyName}`}
                 </Typography>
             </Link>
+
             <Box sx={{ display: 'flex' }} style={{ fontSize: '1.2rem' }}>
                 <MuiRating
                     name='half-rating-read'
