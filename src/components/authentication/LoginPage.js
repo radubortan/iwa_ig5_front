@@ -18,6 +18,7 @@ import { useNavigate } from 'react-router-dom';
 import { useUser } from '../../context/UserContext';
 
 const LoginPage = (props) => {
+    const { t } = props;
     const user = useUser();
     const navigate = useNavigate();
 
