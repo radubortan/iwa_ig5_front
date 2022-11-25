@@ -1,9 +1,13 @@
 import { useState } from "react";
+import {
+    Button
+} from "@mui/material";
 import JobOfferDetail from "./JobOfferDetail";
 import JobOfferList from "./JobOfferList";
+import AddJobOffer from "./employer-side/AddJobOffer"
 
 const JobOfferEmployerPage = (props) => {
-    const jobOfferList = [
+    const jobOfferListInit = [
         {
             "title": "Offre 1",
             "description": "description",
@@ -39,6 +43,20 @@ const JobOfferEmployerPage = (props) => {
         }
     ]
 
+    const [jobOfferList, setJobOfferList] = useState(jobOfferListInit)
+
+    // Add Job Offer
+
+    const [onAddJobOffer, setOnAddJobOffer] = useState(false);
+
+    const hideAddJobOfferPanel = () => {
+      setOnAddJobOffer(false);
+    };
+  
+    const showAddJobOfferPanel = () => {
+      setOnAddJobOffer(true);
+    };
+
 
     // View Job Offer
 
@@ -46,16 +64,32 @@ const JobOfferEmployerPage = (props) => {
 
     const hideViewJobOfferPanel = () => {
         setOnViewJobOffer(null);
-      };
+    };
     
-      const showViewJobOfferPanel = (jobOffer) => {
-        setOnViewJobOffer(jobOffer);
-      };
+    const showViewJobOfferPanel = (jobOffer) => {
+    setOnViewJobOffer(jobOffer);
+    };
+
+    const addJobOffer = (newJobOffer) => {
+        setJobOfferList([...jobOfferList, newJobOffer]);
+    };
     
 
     return (
         <div>
             <h1>Mes offres d'emploi</h1>
+            <Button
+                onClick={showAddJobOfferPanel}
+            >
+                Ajouter une offre d'emploi
+            </Button>
+            {onAddJobOffer && (
+            <AddJobOffer
+              onClose={hideAddJobOfferPanel}
+              open={onAddJobOffer}
+              addJobOffer={addJobOffer}
+            />
+          )}
             {onViewJobOffer && (
             <JobOfferDetail
               onClose={hideViewJobOfferPanel}

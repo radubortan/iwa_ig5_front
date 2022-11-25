@@ -10,7 +10,7 @@ const JobOfferDetail = (props) => {
             <Card>
                 <h1>{jobOffer.title}</h1>
                 <p>Description: {jobOffer.description}</p>
-                <p>Date de début: {jobOffer.begginingDate}</p>
+                <p>Date de début: {jobOffer.beginningDate}</p>
                 <p>Date de fin: {jobOffer.endingDate}</p>
                 <p>Lieu: {jobOffer.place}</p>
                 <p>Nombre de postes: {jobOffer.numberPositions}</p>
