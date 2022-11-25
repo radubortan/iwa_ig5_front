@@ -1,7 +1,13 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 const NotFound = () => {
-    return <div>404 not found</div>;
+    const { t } = useTranslation();
+    return (
+        <div>
+            <p style={{ fontSize: '40px', marginTop: '100px' }}>{t('404')}</p>
+        </div>
+    );
 };
 
 export default NotFound;

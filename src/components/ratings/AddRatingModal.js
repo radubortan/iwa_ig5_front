@@ -10,6 +10,7 @@ import {
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useUser } from '../../context/UserContext';
+import { t } from 'i18next';
 
 const AddRatingModal = (props) => {
     const [comment, setComment] = useState('');
@@ -64,7 +65,7 @@ const AddRatingModal = (props) => {
         <Modal open={props.open} onClose={props.handleClose}>
             <Box sx={style}>
                 <Typography id='modal-modal-title' variant='h6' component='h2'>
-                    Add a rating
+                    {t('ADD_RATING')}
                 </Typography>
                 <Box>
                     <Rating
@@ -76,7 +77,7 @@ const AddRatingModal = (props) => {
                     />
                     {ratingError && (
                         <Typography sx={{ color: '#d32f2f' }}>
-                            A rating must be chosen
+                            {t('RATING_MUST_BE_CHOSEN')}
                         </Typography>
                     )}
                 </Box>
@@ -85,7 +86,7 @@ const AddRatingModal = (props) => {
                     id='outlined-multiline-static'
                     multiline
                     rows={4}
-                    placeholder='Optional'
+                    placeholder={t('OPTIONAL')}
                     value={comment}
                     onChange={(event) => {
                         setComment(event.target.value);
@@ -100,14 +101,14 @@ const AddRatingModal = (props) => {
                     }}
                 >
                     <Button variant='contained' onClick={handleSubmit}>
-                        Submit
+                        {t('ADD')}
                     </Button>
                     <Button
                         variant='contained'
                         color='error'
                         onClick={handleClose}
                     >
-                        Cancel
+                        {t('CANCEL')}
                     </Button>
                 </Box>
             </Box>

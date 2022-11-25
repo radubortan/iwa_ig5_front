@@ -19,8 +19,10 @@ import { isTextFieldEmpty, isEmailValid } from '../../util/validation';
 import { Alert, CircularProgress } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const SignupPage = (props) => {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     //spinner state
     const [isLoading, setIsLoading] = useState(false);
@@ -57,24 +59,24 @@ const SignupPage = (props) => {
     //checks if the value in the email field is valid and sets the error message in case it isn't
     const isEmailFieldValid = (email) => {
         if (isTextFieldEmpty(email)) {
-            setEmailErrorMessage('Le champ ne peut pas être vide');
+            setEmailErrorMessage(t('FIELD_CANNOT_BE_EMPTY'));
             return false;
         }
         const regexEvaluation = isEmailValid(email);
-        setEmailErrorMessage(regexEvaluation.message);
+        setEmailErrorMessage(t('INVALID_EMAIL'));
         return regexEvaluation.validity;
     };
 
     //checks if the password is valid and set the error message in case it isn't
     const isPasswordValid = () => {
         if (isTextFieldEmpty(password) || isTextFieldEmpty(confirmPassword)) {
-            setPasswordErrorMessage('Le champ ne peut pas être vide');
+            setPasswordErrorMessage(t('FIELD_CANNOT_BE_EMPTY'));
             return false;
         } else if (password !== confirmPassword) {
-            setPasswordErrorMessage('Les mots de passe ne sont pas les mêmes');
+            setPasswordErrorMessage(t('PASSWORDS_DONT_MATCH'));
             return false;
         } else if (password.length < 8) {
-            setPasswordErrorMessage('Le mot de passe est trop court');
+            setPasswordErrorMessage(t('PASSWORD_TOO_SHORT'));
             return false;
         }
         setPasswordErrorMessage('');
@@ -179,9 +181,9 @@ const SignupPage = (props) => {
                     setIsLoading(false);
                     const statusCode = error.response.status;
                     if (statusCode === 409) {
-                        setErrorMessage("L'email est déjà pris");
+                        setErrorMessage(t('EMAIL_ALREADY_TAKEN'));
                     } else {
-                        setErrorMessage('Il y a eu un problème');
+                        setErrorMessage(t('PROBLEM'));
                     }
                 }
             } else {
@@ -199,9 +201,9 @@ const SignupPage = (props) => {
                     setIsLoading(false);
                     const statusCode = error.response.status;
                     if (statusCode === 409) {
-                        setErrorMessage("L'email est déjà pris");
+                        setErrorMessage(t('EMAIL_ALREADY_TAKEN'));
                     } else {
-                        setErrorMessage('Il y a eu un problème');
+                        setErrorMessage(t('PROBLEM'));
                     }
                 }
             }
@@ -219,7 +221,7 @@ const SignupPage = (props) => {
                 }}
             >
                 <Typography component='h1' variant='h5'>
-                    Inscription
+                    {t('SIGNUP')}
                 </Typography>
                 <Box
                     component='form'
@@ -231,23 +233,23 @@ const SignupPage = (props) => {
                         <Grid item xs={12}>
                             <FormControl fullWidth>
                                 <InputLabel id='demo-simple-select-label'>
-                                    Vous êtes
+                                    {t('YOU_ARE')}
                                 </InputLabel>
                                 <Select
                                     labelId='demo-simple-select-label'
                                     id='demo-simple-select'
                                     value={accountType}
-                                    label='Vous êtes'
+                                    label={t('YOU_ARE')}
                                     onChange={(event) => {
                                         resetValidity();
                                         setAccountType(event.target.value);
                                     }}
                                 >
                                     <MenuItem value={'candidate'}>
-                                        Chercheur d'emploi
+                                        {t('CANDIDATE')}
                                     </MenuItem>
                                     <MenuItem value={'employer'}>
-                                        Employeur
+                                        {t('EMPLOYER')}
                                     </MenuItem>
                                 </Select>
                             </FormControl>
@@ -260,13 +262,13 @@ const SignupPage = (props) => {
                                         error={!companyNameValid}
                                         helperText={
                                             !companyNameValid
-                                                ? 'Le champ ne peut pas être vide'
+                                                ? t('FIELD_CANNOT_BE_EMPTY')
                                                 : ''
                                         }
                                         required
                                         fullWidth
                                         id='companyName'
-                                        label='Nom entreprise'
+                                        label={t('COMPANY_NAME')}
                                         name='companyName'
                                         onChange={(event) =>
                                             setCompanyName(event.target.value)
@@ -278,13 +280,13 @@ const SignupPage = (props) => {
                                         error={!addressValid}
                                         helperText={
                                             !addressValid
-                                                ? 'Le champ ne peut pas être vide'
+                                                ? t('FIELD_CANNOT_BE_EMPTY')
                                                 : ''
                                         }
                                         required
                                         fullWidth
                                         id='address'
-                                        label='Adresse'
+                                        label={t('ADDRESS')}
                                         name='address'
                                         onChange={(event) =>
                                             setAddress(event.target.value)
@@ -301,7 +303,7 @@ const SignupPage = (props) => {
                                         error={!firstNameValid}
                                         helperText={
                                             !firstNameValid
-                                                ? 'Le champ ne peut pas être vide'
+                                                ? t('FIELD_CANNOT_BE_EMPTY')
                                                 : ''
                                         }
                                         autoComplete='given-name'
@@ -309,7 +311,7 @@ const SignupPage = (props) => {
                                         required
                                         fullWidth
                                         id='firstName'
-                                        label='Prénom'
+                                        label={t('FIRST_NAME')}
                                         autoFocus
                                         onChange={(event) =>
                                             setFirstName(event.target.value)
@@ -322,14 +324,14 @@ const SignupPage = (props) => {
                                         error={!lastNameValid}
                                         helperText={
                                             !lastNameValid
-                                                ? 'Le champ ne peut pas être vide'
+                                                ? t('FIELD_CANNOT_BE_EMPTY')
                                                 : ''
                                         }
                                         required
                                         fullWidth
                                         id='lastName'
-                                        label='Nom'
-                                        name='lastName'
+                                        label={t('LAST_NAME')}
+                                        name={'lastName'}
                                         autoComplete='family-name'
                                         onChange={(event) =>
                                             setLastName(event.target.value)
@@ -344,7 +346,7 @@ const SignupPage = (props) => {
                                         <DatePicker
                                             inputFormat='DD/MM/YYYY'
                                             error
-                                            label='Date de naissance'
+                                            label={t('DATE_OF_BIRTH')}
                                             value={birthday}
                                             onChange={(newValue) => {
                                                 setBirthday(newValue);
@@ -374,7 +376,7 @@ const SignupPage = (props) => {
                                                     marginBottom: '0',
                                                 }}
                                             >
-                                                Le champ ne peut pas être vide
+                                                {t('FIELD_CANNOT_BE_EMPTY')}
                                             </p>
                                         )}
                                     </LocalizationProvider>
@@ -389,13 +391,13 @@ const SignupPage = (props) => {
                                         error={!phoneNumberValid}
                                         helperText={
                                             !phoneNumberValid
-                                                ? 'Le champ ne peut pas être vide'
+                                                ? t('FIELD_CANNOT_BE_EMPTY')
                                                 : ''
                                         }
                                         required
                                         fullWidth
                                         id='phoneNumber'
-                                        label='Numéro de téléphone'
+                                        label={t('PHONE_NUMBER')}
                                         name='phoneNumber'
                                         onChange={(event) =>
                                             setPhoneNumber(event.target.value)
@@ -409,7 +411,7 @@ const SignupPage = (props) => {
                                         required
                                         fullWidth
                                         id='email'
-                                        label='Email Address'
+                                        label={t('EMAIL_ADDRESS')}
                                         name='email'
                                         autoComplete='email'
                                         onChange={(event) =>
@@ -424,7 +426,7 @@ const SignupPage = (props) => {
                                         required
                                         fullWidth
                                         name='password'
-                                        label='Mot de passe'
+                                        label={t('PASSWORD')}
                                         type='password'
                                         id='password'
                                         onChange={(event) =>
@@ -439,7 +441,7 @@ const SignupPage = (props) => {
                                         required
                                         fullWidth
                                         name='confirmPassword'
-                                        label='Confirmer mot de passe'
+                                        label={t('CONFIRM_PASSWORD')}
                                         type='password'
                                         id='confirmPassword'
                                         onChange={(event) =>
@@ -459,7 +461,7 @@ const SignupPage = (props) => {
                         sx={{ mt: 3, mb: 2 }}
                         disabled={isLoading}
                     >
-                        Sign Up
+                        {t('SIGNUP')}
                     </Button>
                     {errorMessage.length > 0 && (
                         <Alert sx={{ mb: 1 }} severity='error'>
@@ -473,7 +475,7 @@ const SignupPage = (props) => {
                                 to='/login'
                                 component={RouterLink}
                             >
-                                Already have an account? Sign in
+                                {t('ALREADY_HAVE_ACCOUNT')}
                             </Link>
                         </Grid>
                     </Grid>

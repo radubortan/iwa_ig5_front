@@ -9,7 +9,7 @@ export const isEmailValid = (email) => {
         /^(?=.{1,64}@)[A-Za-z0-9_-]+(\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*(\.[A-Za-z]{2,})$/;
 
     if (email.match(validRegex)) {
-        return { validity: true, message: '' };
+        return { validity: true };
     }
-    return { validity: false, message: 'Email invalide' };
+    return { validity: false };
 };

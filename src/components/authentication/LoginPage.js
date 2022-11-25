@@ -16,9 +16,10 @@ import { Alert, CircularProgress } from '@mui/material';
 import loginService from '../../services/loginService';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../../context/UserContext';
+import { useTranslation } from 'react-i18next';
 
 const LoginPage = (props) => {
-    const { t } = props;
+    const { t } = useTranslation();
     const user = useUser();
     const navigate = useNavigate();
 
@@ -71,7 +72,7 @@ const LoginPage = (props) => {
                 navigate('/');
             } catch (error) {
                 setIsLoading(false);
-                setErrorMessage("L'email ou le mot de passe est incorrect");
+                setErrorMessage(t('BAD_EMAIL_OR_PASSWORD'));
             }
         }
     };
@@ -79,11 +80,11 @@ const LoginPage = (props) => {
     //checks if the value in the email field is valid and sets the error message in case it isn't
     const isEmailFieldValid = (email) => {
         if (isTextFieldEmpty(email)) {
-            setEmailErrorMessage('Le champ ne peut pas être vide');
+            setEmailErrorMessage(t('FIELD_CANNOT_BE_EMPTY'));
             return false;
         }
         const regexEvaluation = isEmailValid(email);
-        setEmailErrorMessage(regexEvaluation.message);
+        setEmailErrorMessage(t('INVALID_EMAIL'));
         return regexEvaluation.validity;
     };
 
@@ -102,7 +103,7 @@ const LoginPage = (props) => {
                     <LockOutlinedIcon />
                 </Avatar>
                 <Typography component='h1' variant='h5'>
-                    Connexion
+                    {t('LOGIN')}
                 </Typography>
                 <Box
                     component='form'
@@ -117,7 +118,7 @@ const LoginPage = (props) => {
                         required
                         fullWidth
                         id='email'
-                        label='Adresse mail'
+                        label={t('EMAIL_ADDRESS')}
                         name='email'
                         autoComplete='email'
                         autoFocus
@@ -128,15 +129,13 @@ const LoginPage = (props) => {
                     <TextField
                         error={!passwordValid}
                         helperText={
-                            !passwordValid
-                                ? 'Le champ ne peut pas être vide'
-                                : ''
+                            !passwordValid ? t('FIELD_CANNOT_BE_EMPTY') : ''
                         }
                         margin='normal'
                         required
                         fullWidth
                         name='password'
-                        label='Mot de passe'
+                        label={t('PASSWORD')}
                         type='password'
                         id='password'
                         autoComplete='current-password'
@@ -144,10 +143,6 @@ const LoginPage = (props) => {
                             setPassword(event.target.value);
                         }}
                     />
-                    {/* <FormControlLabel
-                        control={<Checkbox value='remember' color='primary' />}
-                        label='Se souvenir de moi'
-                    /> */}
                     <Button
                         type='submit'
                         fullWidth
@@ -155,7 +150,7 @@ const LoginPage = (props) => {
                         sx={{ mt: 3, mb: 2 }}
                         disabled={isLoading}
                     >
-                        Connexion
+                        {t('LOGIN')}
                     </Button>
                     {errorMessage.length > 0 && (
                         <Alert sx={{ mb: 1 }} severity='error'>
@@ -163,18 +158,13 @@ const LoginPage = (props) => {
                         </Alert>
                     )}
                     <Grid container>
-                        {/* <Grid item xs>
-                            <Link href='#' variant='body2'>
-                                Mot de passe oublié?
-                            </Link>
-                        </Grid> */}
                         <Grid item>
                             <Link
                                 to='/signup'
                                 component={RouterLink}
                                 variant='body2'
                             >
-                                {'Créer un compte'}
+                                {t('CREATE_ACCOUNT')}
                             </Link>
                         </Grid>
                     </Grid>

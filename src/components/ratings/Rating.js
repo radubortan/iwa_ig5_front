@@ -5,8 +5,10 @@ import { Rating as MuiRating } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import StarIcon from '@mui/icons-material/Star';
 import { convertYyyymmddToDdmmyyyy } from '../../util/date';
+import { useTranslation } from 'react-i18next';
 
 const Rating = (props) => {
+    const { t } = useTranslation();
     const { rating, role } = props;
     const navigate = useNavigate();
 
@@ -44,9 +46,9 @@ const Rating = (props) => {
                     readOnly
                     value={rating.value}
                 />
-                <Box
-                    sx={{ ml: '10px', color: 'gray' }}
-                >{`le ${convertYyyymmddToDdmmyyyy(rating.date)}`}</Box>
+                <Box sx={{ ml: '10px', color: 'gray' }}>{`${t(
+                    'DATE_ON'
+                )} ${convertYyyymmddToDdmmyyyy(rating.date)}`}</Box>
             </Box>
             <Typography style={{ fontSize: '1.1rem', textAlign: 'left' }}>
                 {rating.comment}
