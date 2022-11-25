@@ -6,24 +6,24 @@ import { Modal,
     Button
  } from "@mui/material";
 
-const AddJobOffer = (props) => {
-    const [newJobOffer, setNewJobOffer] = useState({
-        title: '',
-        description: '',
-        beginningDate: '',
-        endingDate: '',
-        place: '',
-        numberPositions: 0,
-        remuneration: 0,
-        publishingDate: '',
+const EditJobOffer = (props) => {
+    const [updatedJobOffer, setUpdatedJobOffer] = useState({
+        title: props.jobOfferInfo.jobOffer.title,
+        description: props.jobOfferInfo.jobOffer.description,
+        beginningDate: props.jobOfferInfo.jobOffer.beginningDate,
+        endingDate: props.jobOfferInfo.jobOffer.endingDate,
+        place: props.jobOfferInfo.jobOffer.place,
+        numberPositions: props.jobOfferInfo.jobOffer.numberPositions,
+        remuneration: props.jobOfferInfo.jobOffer.remuneration,
+        publishingDate: props.jobOfferInfo.jobOffer.publishingDate,
         idEmployer: 'props.idEmployer'
     });
 
     
     const handleChange = (e) => {
         const value = e.target.value;
-        setNewJobOffer({
-            ...newJobOffer,
+        setUpdatedJobOffer({
+            ...updatedJobOffer,
             [e.target.name]: value,
         });
     };
@@ -34,47 +34,47 @@ const AddJobOffer = (props) => {
         setError(false)
         let isValid = true;
 
-        if (newJobOffer.title.trim() === '') {
+        if (updatedJobOffer.title.trim() === '') {
             setError(true)
             isValid = false;
         }
-        if (newJobOffer.description.trim() === '') {
+        if (updatedJobOffer.description.trim() === '') {
             setError(true)
             isValid = false;
         }
-        if(newJobOffer.beginningDate == ''){
+        if(updatedJobOffer.beginningDate == ''){
             setError(true)
             isValid = false;
         }
-        if(newJobOffer.endingDate == ''){
+        if(updatedJobOffer.endingDate == ''){
             setError(true)
             isValid = false;
         }
-        if(newJobOffer.place.trim() == ''){
+        if(updatedJobOffer.place.trim() == ''){
             setError(true)
             isValid = false;
         }
-        if(newJobOffer.numberPositions == ''){
+        if(updatedJobOffer.numberPositions == ''){
             setError(true)
             isValid = false;
         }
-        if(newJobOffer.remuneration == ''){
+        if(updatedJobOffer.remuneration == ''){
             setError(true)
             isValid = false;
         }
-        if(newJobOffer.publishingDate == ''){
+        if(updatedJobOffer.publishingDate == ''){
             setError(true)
             isValid = false;
         }
         return isValid;
     };
 
-    const saveJobOffer = (e) => {
+    const updateJobOffer = (e) => {
         e.preventDefault();
         // Validation
         if (isValid()) {
             props.onClose();
-            props.addJobOffer(newJobOffer);
+            props.editJobOffer(updatedJobOffer, props.jobOfferInfo.index);
         }
     };
 
@@ -91,7 +91,7 @@ const AddJobOffer = (props) => {
                 <Card>
                     <h1>Création d'une offre d'emploi</h1>
                     {error && <p className="red">Veuillez remplir tous les champs</p>}
-                    <form method='post' onSubmit={saveJobOffer}>
+                    <form method='post' onSubmit={updateJobOffer}>
                         <div className='col-5'>
                             <div className="row">
                                 <TextField 
@@ -99,7 +99,7 @@ const AddJobOffer = (props) => {
                                 name="title"
                                 label="Titre" 
                                 variant="standard" 
-                                value={newJobOffer.title}
+                                value={updatedJobOffer.title}
                                 onChange={handleChange}
                                 />
                             </div>
@@ -111,7 +111,7 @@ const AddJobOffer = (props) => {
                                 name="description"
                                 label="Description" 
                                 variant="standard" 
-                                value={newJobOffer.description}
+                                value={updatedJobOffer.description}
                                 onChange={handleChange}
                                 />
                             </div>
@@ -121,7 +121,7 @@ const AddJobOffer = (props) => {
                                 type="date"
                                 name="beginningDate"
                                 label=""
-                                value={newJobOffer.beginningDate}
+                                value={updatedJobOffer.beginningDate}
                                 onChange={handleChange}
                                 />
                             </div>
@@ -131,7 +131,7 @@ const AddJobOffer = (props) => {
                                 type="date"
                                 name="endingDate"
                                 label=""
-                                value={newJobOffer.endingDate}
+                                value={updatedJobOffer.endingDate}
                                 onChange={handleChange}
                                 />
                             </div>
@@ -141,7 +141,7 @@ const AddJobOffer = (props) => {
                                 name="place"
                                 label="Lieu" 
                                 variant="standard"
-                                value={newJobOffer.place}
+                                value={updatedJobOffer.place}
                                 onChange={handleChange}
                                 />
                             </div>
@@ -152,7 +152,7 @@ const AddJobOffer = (props) => {
                                 label="Nombre de postes" 
                                 variant="standard" 
                                 type="number"
-                                value={newJobOffer.numberPositions}
+                                value={updatedJobOffer.numberPositions}
                                 onChange={handleChange}
                                 />
                             </div>
@@ -163,7 +163,7 @@ const AddJobOffer = (props) => {
                                 label="Rémunération"
                                 variant="standard"
                                 type="number"
-                                value={newJobOffer.remuneration}
+                                value={updatedJobOffer.remuneration}
                                 onChange={handleChange}
                                 />
                             </div>
@@ -173,14 +173,14 @@ const AddJobOffer = (props) => {
                                 type="date"
                                 name="publishingDate"
                                 label=""
-                                value={newJobOffer.publishingDate}
+                                value={updatedJobOffer.publishingDate}
                                 onChange={handleChange}
                                 />
                             </div>
                         </div>  
                     </form>
                     <div>
-                        <Button onClick={saveJobOffer}>
+                        <Button onClick={updateJobOffer}>
                             Confirmer
                         </Button>
                         <Button onClick={props.onClose}>
@@ -189,10 +189,9 @@ const AddJobOffer = (props) => {
                     </div>
                 </Card>
                 </Grid>
-
             </Grid>
         </Modal>
     )
 }
 
-export default AddJobOffer;
+export default EditJobOffer;

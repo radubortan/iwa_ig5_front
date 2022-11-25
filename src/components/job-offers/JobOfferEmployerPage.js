@@ -5,6 +5,8 @@ import {
 import JobOfferDetail from "./JobOfferDetail";
 import JobOfferList from "./JobOfferList";
 import AddJobOffer from "./employer-side/AddJobOffer"
+import EditJobOffer from "./employer-side/EditJobOffer"
+import DeleteJobOffer from "./employer-side/DeleteJobOffer"
 
 const JobOfferEmployerPage = (props) => {
     const jobOfferListInit = [
@@ -57,6 +59,49 @@ const JobOfferEmployerPage = (props) => {
       setOnAddJobOffer(true);
     };
 
+    // Edit Job Offer
+
+    const [onEditJobOffer, setOnEditJobOffer] = useState(null);
+
+    const hideEditJobOfferPanel = () => {
+        setOnEditJobOffer(null);
+    };
+
+    const showEditJobOfferPanel = (jobOffer, index) => {
+        const jobOfferInfo = {
+        jobOffer: jobOffer,
+        index: index,
+        };
+        setOnEditJobOffer(jobOfferInfo);
+    };
+
+    const editJobOffer = async (editedJobOffer, indexJobOffer) => {
+        const updatedJobOffers = [...jobOfferList];
+        updatedJobOffers.splice(indexJobOffer, 1, editedJobOffer);
+        setJobOfferList([...updatedJobOffers]);
+    };
+
+      // Delete Job Offer
+
+    const [indexJobOfferBeingDeleted, setIndexJobOfferBeingDeleted] =
+            useState(null);
+    const [jobOfferBeingDeleted, setJobOfferBeingDeleted] = useState(null);
+
+    const hideDeleteJobOfferPanel = () => {
+        setIndexJobOfferBeingDeleted(null);
+    };
+
+    const showDeleteJobOfferPanel = (indexJobOffer, jobOffer) => {
+        setIndexJobOfferBeingDeleted(indexJobOffer);
+        setJobOfferBeingDeleted(jobOffer);
+    };
+
+    const deleteJobOffer = (indexJobOffer, idJobOffer) => {
+        const updatedJobOffer = [...jobOfferList];
+        updatedJobOffer.splice(indexJobOffer, 1);
+        setJobOfferList([...updatedJobOffer]);
+    };
+
 
     // View Job Offer
 
@@ -86,20 +131,40 @@ const JobOfferEmployerPage = (props) => {
             {onAddJobOffer && (
             <AddJobOffer
               onClose={hideAddJobOfferPanel}
-              open={onAddJobOffer}
+              open={true}
               addJobOffer={addJobOffer}
             />
-          )}
+            )}
+            {onEditJobOffer && (
+            <EditJobOffer
+              onClose={hideEditJobOfferPanel}
+              jobOfferInfo={onEditJobOffer}
+              open={true}
+              editJobOffer={editJobOffer}
+              jobOfferList={JobOfferList}
+            />
+            )}
+            {indexJobOfferBeingDeleted !== null && (
+            <DeleteJobOffer
+              onClose={hideDeleteJobOfferPanel}
+              open={true}
+              indexJobOffer={indexJobOfferBeingDeleted}
+              jobOffer={jobOfferBeingDeleted}
+              onDeleteJobOffer={deleteJobOffer}
+            />
+            )}
             {onViewJobOffer && (
             <JobOfferDetail
               onClose={hideViewJobOfferPanel}
-              open={onViewJobOffer}
+              open={true}
               jobOffer={onViewJobOffer}
             />
-          )}
+            )}
             <JobOfferList 
             jobOfferList={jobOfferList}
             onViewJobOffer={showViewJobOfferPanel}
+            onEditJobOffer={showEditJobOfferPanel}
+            onDeleteJobOffer={showDeleteJobOfferPanel}
             />
         </div>
     )
