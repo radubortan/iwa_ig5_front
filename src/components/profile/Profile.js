@@ -5,9 +5,11 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Card, Container, Typography, Box, Button } from '@mui/material';
 import { convertEpochDate } from '../../util/date';
 import RatingsContainer from '../ratings/RatingsContainer';
+import { useTranslation } from 'react-i18next';
 
 const Profile = () => {
     const navigate = useNavigate();
+    const { t } = useTranslation();
     const [profile, setProfile] = useState({
         phoneNumber: '',
         lastName: '',
@@ -20,7 +22,6 @@ const Profile = () => {
     const user = useUser();
 
     //get user id from navigations
-
     const fetchProfileInfo = async () => {
         const role = await userService.getUserRole(id, user.accessToken);
         //if the request fails, we redirect to a 404
@@ -84,23 +85,23 @@ const Profile = () => {
                     <Typography variant='p' gutterBottom>
                         {`Type : ${
                             profile.role === 'ROLE_EMPLOYER'
-                                ? 'Entreprise'
-                                : 'Candidat'
+                                ? t('EMPLOYER')
+                                : t('CANDIDATE')
                         }`}
                     </Typography>
                     {profile.role === 'ROLE_CANDIDATE' && (
                         <Typography variant='p' gutterBottom>
-                            {`Date de naissance : ${convertEpochDate(
+                            {`${t('DATE_OF_BIRTH')} : ${convertEpochDate(
                                 Date.parse(profile.birthday)
                             )}`}
                         </Typography>
                     )}
                     <Typography variant='p' gutterBottom>
-                        {`Phone number : ${profile.phoneNumber}`}
+                        {`${t('PHONE_NUMBER')} : ${profile.phoneNumber}`}
                     </Typography>
                     {profile.role === 'ROLE_EMPLOYER' && (
                         <Typography variant='p' gutterBottom>
-                            {`Adresse : ${profile.address}`}
+                            {`${t('PHONE_NUMBER')} : ${profile.address}`}
                         </Typography>
                     )}
                 </Box>
@@ -117,7 +118,7 @@ const Profile = () => {
                             variant='contained'
                             onClick={() => navigate('/profile/edit')}
                         >
-                            Editer mes informations
+                            {t('EDIT_MY_INFO')}
                         </Button>
                     )}
                     {profile.role === 'ROLE_CANDIDATE' && (
@@ -128,7 +129,7 @@ const Profile = () => {
                                 navigate('/');
                             }}
                         >
-                            Voir CV
+                            {t('SEE_CV')}
                         </Button>
                     )}
                 </Box>

@@ -10,9 +10,12 @@ import ratingService from '../../services/ratingService';
 import { useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { convertDate } from '../../util/date';
+import { useTranslation } from 'react-i18next';
+import { t } from 'i18next';
 
 const RatingsContainer = (props) => {
     const [showRatingModal, setShowRatingModal] = useState(false);
+    const { t } = useTranslation();
     const [showAddModal, setShowAddModal] = useState(false);
     const user = useUser();
     const { id } = useParams();
@@ -139,7 +142,7 @@ const RatingsContainer = (props) => {
 
             <Box sx={{ display: 'flex', gap: '30px', alignItems: 'center' }}>
                 <Typography variant='h4' sx={{ alignSelf: 'flex-start' }}>
-                    Ratings
+                    {t('RATINGS')}
                 </Typography>
 
                 {(ratings.length !== 0 || myRating) && (
@@ -163,7 +166,7 @@ const RatingsContainer = (props) => {
                             setShowRatingModal(true);
                         }}
                     >
-                        My rating
+                        {t('MY_RATING')}
                     </Button>
                 )}
                 {user.accountId !== id && !myRating && (
@@ -173,7 +176,7 @@ const RatingsContainer = (props) => {
                             setShowAddModal(true);
                         }}
                     >
-                        Add rating
+                        {t('ADD_RATING')}
                     </Button>
                 )}
             </Box>

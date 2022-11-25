@@ -8,8 +8,10 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { isTextFieldEmpty } from '../../util/validation';
 import { CircularProgress } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 const ProfileEdit = () => {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     //spinner state
     const [isLoading, setIsLoading] = useState(false);
@@ -171,7 +173,7 @@ const ProfileEdit = () => {
                                     error={!firstNameValid}
                                     helperText={
                                         !firstNameValid
-                                            ? 'Le champ ne peut pas être vide'
+                                            ? t('FIELD_CANNOT_BE_EMPTY')
                                             : ''
                                     }
                                     value={profile.firstName}
@@ -185,7 +187,7 @@ const ProfileEdit = () => {
                                     }}
                                     fullWidth
                                     id='firstName'
-                                    label='Prénom'
+                                    label={t('FIRST_NAME')}
                                     name='firstName'
                                 />
                             </Grid>
@@ -194,7 +196,7 @@ const ProfileEdit = () => {
                                     error={!lastNameValid}
                                     helperText={
                                         !lastNameValid
-                                            ? 'Le champ ne peut pas être vide'
+                                            ? t('FIELD_CANNOT_BE_EMPTY')
                                             : ''
                                     }
                                     value={profile.lastName}
@@ -208,7 +210,7 @@ const ProfileEdit = () => {
                                     }}
                                     fullWidth
                                     id='lastName'
-                                    label='Nom'
+                                    label={t('LAST_NAME')}
                                     name='lastName'
                                 />
                             </Grid>
@@ -219,7 +221,7 @@ const ProfileEdit = () => {
                                     <DatePicker
                                         inputFormat='DD/MM/YYYY'
                                         error
-                                        label='Date de naissance'
+                                        label={t('DATE_OF_BIRTH')}
                                         value={profile.birthday}
                                         onChange={(date) => {
                                             setProfile((prev) => {
@@ -254,7 +256,7 @@ const ProfileEdit = () => {
                                                 marginBottom: '0',
                                             }}
                                         >
-                                            Le champ ne peut pas être vide
+                                            {t('FIELD_CANNOT_BE_EMPTY')}
                                         </p>
                                     )}
                                 </LocalizationProvider>
@@ -269,13 +271,13 @@ const ProfileEdit = () => {
                                     error={!companyNameValid}
                                     helperText={
                                         !companyNameValid
-                                            ? 'Le champ ne peut pas être vide'
+                                            ? t('FIELD_CANNOT_BE_EMPTY')
                                             : ''
                                     }
                                     value={profile.companyName}
                                     fullWidth
                                     id='companyName'
-                                    label='Nom entreprise'
+                                    label={t('COMPANY_NAME')}
                                     name='companyName'
                                     onChange={(event) => {
                                         setProfile((prev) => {
@@ -292,13 +294,13 @@ const ProfileEdit = () => {
                                     error={!addressValid}
                                     helperText={
                                         !addressValid
-                                            ? 'Le champ ne peut pas être vide'
+                                            ? t('FIELD_CANNOT_BE_EMPTY')
                                             : ''
                                     }
                                     value={profile.address}
                                     fullWidth
                                     id='address'
-                                    label='Adresse'
+                                    label={t('ADDRESS')}
                                     name='address'
                                     onChange={(event) => {
                                         setProfile((prev) => {
@@ -317,7 +319,7 @@ const ProfileEdit = () => {
                             error={!phoneNumberValid}
                             helperText={
                                 !phoneNumberValid
-                                    ? 'Le champ ne peut pas être vide'
+                                    ? t('FIELD_CANNOT_BE_EMPTY')
                                     : ''
                             }
                             fullWidth
@@ -331,7 +333,7 @@ const ProfileEdit = () => {
                                 });
                             }}
                             id='phoneNumber'
-                            label='Numéro de téléphone'
+                            label={t('PHONE_NUMBER')}
                             name='phoneNumber'
                         />
                     </Grid>
@@ -343,7 +345,7 @@ const ProfileEdit = () => {
                             disabled={isLoading}
                             // onClick={() => handleSubmit()}
                         >
-                            Enregistrer
+                            {t('SAVE')}
                         </Button>
                     </Grid>
                     <Grid item xs={12}>
@@ -355,7 +357,7 @@ const ProfileEdit = () => {
                                 navigate(`/profile/${user.accountId}`)
                             }
                         >
-                            Annuler
+                            {t('CANCEL')}
                         </Button>
                     </Grid>
                 </Grid>

@@ -4,8 +4,10 @@ import { Rating as MuiRating } from '@mui/material';
 import { convertYyyymmddToDdmmyyyy } from '../../util/date';
 import { useState } from 'react';
 import ConfirmationModal from '../general/ConfirmationModal';
+import { useTranslation } from 'react-i18next';
 
 const ViewRatingModal = (props) => {
+    const { t } = useTranslation();
     const { rating } = props;
     const [showDeleteModal, setShowDeleteModal] = useState(false);
 
@@ -38,7 +40,7 @@ const ViewRatingModal = (props) => {
                         props.onClose();
                     }}
                 >
-                    Are you sure you want to delete your rating?
+                    {t('SURE_DELETE_RATING')}
                 </ConfirmationModal>
             )}
 
@@ -49,7 +51,7 @@ const ViewRatingModal = (props) => {
                         variant='h6'
                         component='h2'
                     >
-                        My rating
+                        {t('MY_RATING')}
                     </Typography>
 
                     {rating && (
@@ -98,14 +100,14 @@ const ViewRatingModal = (props) => {
                                 setShowDeleteModal(true);
                             }}
                         >
-                            Delete
+                            {t('DELETE')}
                         </Button>
                         <Button
                             variant='contained'
                             color='error'
                             onClick={props.onClose}
                         >
-                            Close
+                            {t('CLOSE')}
                         </Button>
                     </Box>
                 </Box>
