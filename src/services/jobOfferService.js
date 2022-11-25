@@ -32,7 +32,7 @@ export default {
         return new Promise((resolve, reject) => {
             axios({
                 method: 'put',
-                url: `http://localhost:8080/api/job-offers/${idJobOffer}`,
+                url: `http://localhost:8080/api/job-offers/${jobOffer.id}`,
                 headers: { Authorization: `Bearer ${accessToken}` },
                 data: {
                     title: jobOffer.title,
