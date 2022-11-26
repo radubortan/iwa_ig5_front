@@ -8,6 +8,7 @@ import Home from './components/general/Home';
 import NotFound from './components/general/NotFound';
 import Profile from './components/profile/Profile';
 import ProfileEdit from './components/profile/ProfileEdit';
+import JobOfferPage from './components/job-offers/JobOfferPage';
 
 function App() {
     const user = useUser();
@@ -37,8 +38,11 @@ function App() {
                         user.accountType ? <Navigate to='/' /> : <SignupPage />
                     }
                 />
+                {/* job offer route */}
+                <Route path='/job-offer' element={<JobOfferPage />} />
                 <Route path='/profile/:id' element={<Profile />} />
                 <Route path='/profile/edit' element={<ProfileEdit />} />
+                <Route path='/job-offer' element={<JobOfferPage/>}/>
                 <Route path='*' element={<NotFound />} />
             </Routes>
         </div>

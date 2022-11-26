@@ -5,9 +5,8 @@ import JobOfferList from "./JobOfferList";
 import JobOfferDetail from "./JobOfferDetail";
 
 const JobOfferCandidatePage = (props) => {
-    //const user = useUser();
     const user = {
-        id: 2
+        id: props.accountId
     }
     const [jobOfferList, setJobOfferList] = useState([])
     const accessToken = "token"
@@ -21,7 +20,7 @@ const JobOfferCandidatePage = (props) => {
     useEffect(() => {
         setJobOfferList([]);
         fetchJobOffers();
-    }, [props.role]);
+    }, [props.accountId,props.role]);
 
 
     const [onViewJobOffer, setOnViewJobOffer] = useState(null);

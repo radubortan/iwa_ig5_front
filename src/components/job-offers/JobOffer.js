@@ -1,11 +1,12 @@
 import { 
     Button,
+    ListItem,
     MdModeEdit
 } from "@mui/material";
 function JobOffer(props) {
     const onViewModeOnly = props.onViewModeOnly
     return (
-      <li
+      <ListItem
         onClick={() => {
           props.onViewJobOffer(props.jobOffer);
         }}
@@ -35,7 +36,7 @@ function JobOffer(props) {
             </Button>
           </div>}
         </div>
-      </li>
+      </ListItem>
     );
   }
   
