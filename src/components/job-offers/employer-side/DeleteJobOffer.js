@@ -4,16 +4,17 @@ import {
     Button ,
     Card
 } from '@mui/material';
-
+import { useTranslation } from 'react-i18next';
 
 const DeleteJobOffer = (props) => {
+    const {t} = useTranslation();
 
   return (
     <Modal open={props.open}  onClose={props.onClose}>
         <Card>
             <div className="row">
             <h2>
-            Voulez vous vraiment supprimer cette offre d'emploi ?
+            {t('CONFIRM_DELETE_JOB_OFFER')}
             </h2>
         </div>
         <div>
@@ -27,10 +28,10 @@ const DeleteJobOffer = (props) => {
             }}
             className='cancelButton'
             >
-            Supprimer
+            {t('DELETE')}
             </Button>
             <Button className='confirmButton' onClick={props.onClose}>
-            Annuler
+            {t('CANCEL')}
             </Button>
         </div>
         </Card>

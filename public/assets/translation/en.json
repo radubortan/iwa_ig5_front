@@ -46,5 +46,26 @@
     "SURE_DELETE_RATING":"Are you sure you want to delete your rating?",
     "DELETE":"Delete",
     "CLOSE":"Close",
-    "JOB_OFFERS": "Job Offers"
+    "JOB_OFFERS": "Job offers",
+    "MY_JOB_OFFERS": "My job offers",
+    "ADD_JOB_OFFER": "Add a job offer",
+    "NO_JOB_OFFER_AVAILABLE": "No job offer available",
+    "EDIT": "Edit",
+    "DELETE": "Delete",
+    "TITLE": "Title",
+    "DESCRIPTION": "Description",
+    "BEGINNING_DATE": "Beginning date",
+    "ENDING_DATE": "Ending date",
+    "PLACE": "place",
+    "NUMBER_POSITIONS": "Number of positions",
+    "REMUNERATION": "Remuneration",
+    "PUBLISHING_DATE": "Publishing date",
+    "ALL_JOB_OFFERS": "All job offers",
+    "CREATE_JOB_OFFER": "Create a job offer",
+    "MODIFY_JOB_OFFER": "Modify a job offer",
+    "CONFIRM": "Confirm",
+    "CANCEL": "Cancel",
+    "PLEASE_FILL_FIELDS": "Please fill all fields",
+    "CONFIRM_DELETE_JOB_OFFER": "Are you sure about deleting this job offer?"
+
 }

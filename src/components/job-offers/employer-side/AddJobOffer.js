@@ -6,8 +6,10 @@ import { Modal,
     Button,
     Container
  } from "@mui/material";
+ import { useTranslation } from "react-i18next";
 
 const AddJobOffer = (props) => {
+    const {t} = useTranslation();
     const [newJobOffer, setNewJobOffer] = useState({
         title: '',
         description: '',
@@ -84,15 +86,15 @@ const AddJobOffer = (props) => {
             <Container>
 
                 <Card>
-                    <h1>Création d'une offre d'emploi</h1>
-                    {error && <p className="red">Veuillez remplir tous les champs</p>}
+                    <h1>{"CREATE_JOB_OFFER"}</h1>
+                    {error && <p className="red">{t('PLEASE_FILL_FIELDS')}</p>}
                     <form method='post' onSubmit={saveJobOffer}>
                         <div className='col-5'>
                             <div className="row">
                                 <TextField 
                                 id="standard-basic" 
                                 name="title"
-                                label="Titre" 
+                                label={t('TITLE')}
                                 variant="standard" 
                                 value={newJobOffer.title}
                                 onChange={handleChange}
@@ -104,14 +106,14 @@ const AddJobOffer = (props) => {
                                 maxRows={5}
                                 id="standard-basic" 
                                 name="description"
-                                label="Description" 
+                                label={t('DESCRIPTION')}
                                 variant="standard" 
                                 value={newJobOffer.description}
                                 onChange={handleChange}
                                 />
                             </div>
                             <div className="row">
-                                <p>Date de début</p>
+                                <p>{t('BEGINNING_DATE')}</p>
                                 <TextField
                                 type="date"
                                 name="beginningDate"
@@ -121,7 +123,7 @@ const AddJobOffer = (props) => {
                                 />
                             </div>
                             <div className="row">
-                                <p>Date de fin</p>
+                                <p>{t('ENDING_DATE')}</p>
                                 <TextField
                                 type="date"
                                 name="endingDate"
@@ -136,7 +138,7 @@ const AddJobOffer = (props) => {
                                 <TextField 
                                 id="standard-basic" 
                                 name="place"
-                                label="Lieu" 
+                                label={t('PLACE')}
                                 variant="standard"
                                 value={newJobOffer.place}
                                 onChange={handleChange}
@@ -146,7 +148,7 @@ const AddJobOffer = (props) => {
                                 <TextField 
                                 id="standard-basic" 
                                 name="numberPositions"
-                                label="Nombre de postes" 
+                                label={t('NUMBER_POSITIONS')}
                                 variant="standard" 
                                 type="number"
                                 value={newJobOffer.numberPositions}
@@ -157,7 +159,7 @@ const AddJobOffer = (props) => {
                                 <TextField 
                                 id="standard-basic"
                                 name="remuneration"
-                                label="Rémunération"
+                                label={t('REMUNERATION')}
                                 variant="standard"
                                 type="number"
                                 value={newJobOffer.remuneration}
@@ -165,7 +167,7 @@ const AddJobOffer = (props) => {
                                 />
                             </div>
                             <div className="row">
-                                <p>Date de publication</p>
+                                <p>{t('PUBLISHING_DATE')}</p>
                                 <TextField
                                 type="date"
                                 name="publishingDate"
@@ -178,10 +180,10 @@ const AddJobOffer = (props) => {
                     </form>
                     <div>
                         <Button onClick={saveJobOffer}>
-                            Confirmer
+                            {t('CONFIRM')}
                         </Button>
                         <Button onClick={props.onClose}>
-                            Annuler
+                            {t('CANCEL')}
                         </Button>
                     </div>
                 </Card>
