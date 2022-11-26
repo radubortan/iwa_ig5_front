@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useUser, useEffect } from "react";
 import {
     Button
 } from "@mui/material";
@@ -7,45 +7,26 @@ import JobOfferList from "./JobOfferList";
 import AddJobOffer from "./employer-side/AddJobOffer"
 import EditJobOffer from "./employer-side/EditJobOffer"
 import DeleteJobOffer from "./employer-side/DeleteJobOffer"
+import jobOfferService from "../../services/jobOfferService";
 
 const JobOfferEmployerPage = (props) => {
-    const jobOfferListInit = [
-        {
-            "title": "Offre 1",
-            "description": "description",
-            "beginningDate": "2012-04-23T18:25:43.511Z",
-            "endingDate": "2012-04-23T18:25:43.511Z",
-            "place": "Montpellier",
-            "numberPositions": 2,
-            "remuneration": 2100,
-            "publishingDate": "2012-04-23T18:25:43.511Z",
-            "idEmployer": 2    
-        },
-        {
-            "title": "Offre 2",
-            "description": "description",
-            "beginningDate": "2012-04-23T18:25:43.511Z",
-            "endingDate": "2012-04-23T18:25:43.511Z",
-            "place": "Montpellier",
-            "numberPositions": 2,
-            "remuneration": 2100,
-            "publishingDate": "2012-04-23T18:25:43.511Z",
-            "idEmployer": 2    
-        },
-        {
-            "title": "Offre 3",
-            "description": "description",
-            "beginningDate": "2012-04-23T18:25:43.511Z",
-            "endingDate": "2012-04-23T18:25:43.511Z",
-            "place": "Montpellier",
-            "numberPositions": 2,
-            "remuneration": 2100,
-            "publishingDate": "2012-04-23T18:25:43.511Z",
-            "idEmployer": 2    
+    //const user = useUser();
+    const user = {
+        id: 2
+    }
+    const [jobOfferList, setJobOfferList] = useState([])
+    const accessToken = "token"
+    const fetchJobOffers = async () => {
+        const response = await jobOfferService.getJobOffersByIdEmployer(user.id, accessToken)
+        if(response){
+            setJobOfferList(response)
         }
-    ]
+    }
 
-    const [jobOfferList, setJobOfferList] = useState(jobOfferListInit)
+    useEffect(() => {
+        setJobOfferList([]);
+        fetchJobOffers();
+    }, [props.role]);
 
     // Add Job Offer
 
@@ -57,6 +38,14 @@ const JobOfferEmployerPage = (props) => {
   
     const showAddJobOfferPanel = () => {
       setOnAddJobOffer(true);
+    };
+
+    const addJobOffer = async (newJobOffer) => {
+        let response = await jobOfferService.addJobOffer(newJobOffer, user.id, accessToken);
+        if(response){
+            newJobOffer.idJobOffer = response.idJobOffer;
+            setJobOfferList([...jobOfferList, newJobOffer]);
+        }
     };
 
     // Edit Job Offer
@@ -76,6 +65,7 @@ const JobOfferEmployerPage = (props) => {
     };
 
     const editJobOffer = async (editedJobOffer, indexJobOffer) => {
+        let response = await jobOfferService.updateJobOffer(editedJobOffer, accessToken)
         const updatedJobOffers = [...jobOfferList];
         updatedJobOffers.splice(indexJobOffer, 1, editedJobOffer);
         setJobOfferList([...updatedJobOffers]);
@@ -96,7 +86,8 @@ const JobOfferEmployerPage = (props) => {
         setJobOfferBeingDeleted(jobOffer);
     };
 
-    const deleteJobOffer = (indexJobOffer, idJobOffer) => {
+    const deleteJobOffer = async (indexJobOffer, idJobOffer) => {
+        let response = await jobOfferService.deleteJobOffer(idJobOffer, accessToken)
         const updatedJobOffer = [...jobOfferList];
         updatedJobOffer.splice(indexJobOffer, 1);
         setJobOfferList([...updatedJobOffer]);
@@ -113,10 +104,6 @@ const JobOfferEmployerPage = (props) => {
     
     const showViewJobOfferPanel = (jobOffer) => {
     setOnViewJobOffer(jobOffer);
-    };
-
-    const addJobOffer = (newJobOffer) => {
-        setJobOfferList([...jobOfferList, newJobOffer]);
     };
     
 

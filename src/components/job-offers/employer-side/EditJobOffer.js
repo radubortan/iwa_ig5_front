@@ -3,11 +3,13 @@ import { Modal,
     Grid,
     Card,
     TextField,
-    Button
+    Button,
+    Container
  } from "@mui/material";
 
 const EditJobOffer = (props) => {
     const [updatedJobOffer, setUpdatedJobOffer] = useState({
+        idJobOffer: props.jobOfferInfo.jobOffer.idJobOffer,
         title: props.jobOfferInfo.jobOffer.title,
         description: props.jobOfferInfo.jobOffer.description,
         beginningDate: props.jobOfferInfo.jobOffer.beginningDate,
@@ -16,7 +18,6 @@ const EditJobOffer = (props) => {
         numberPositions: props.jobOfferInfo.jobOffer.numberPositions,
         remuneration: props.jobOfferInfo.jobOffer.remuneration,
         publishingDate: props.jobOfferInfo.jobOffer.publishingDate,
-        idEmployer: 'props.idEmployer'
     });
 
     
@@ -80,16 +81,10 @@ const EditJobOffer = (props) => {
 
     return (
         <Modal  open={props.open} onClose={props.onClose}>
-            <Grid
-                container
-                spacing={24}
-                justify="center"
-                style={{ minHeight: '100vh', maxWidth: '100%' }}
-                >
-                    <Grid item xs={3} align="center">
+            <Container>
   
                 <Card>
-                    <h1>Création d'une offre d'emploi</h1>
+                    <h1>Modification d'une offre d'emploi</h1>
                     {error && <p className="red">Veuillez remplir tous les champs</p>}
                     <form method='post' onSubmit={updateJobOffer}>
                         <div className='col-5'>
@@ -135,6 +130,8 @@ const EditJobOffer = (props) => {
                                 onChange={handleChange}
                                 />
                             </div>
+                        </div>
+                        <div className="col-5">
                             <div className="row">
                                 <TextField 
                                 id="standard-basic" 
@@ -188,8 +185,7 @@ const EditJobOffer = (props) => {
                         </Button>
                     </div>
                 </Card>
-                </Grid>
-            </Grid>
+               </Container>
         </Modal>
     )
 }

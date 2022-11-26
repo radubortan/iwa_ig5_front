@@ -22,7 +22,7 @@ const DeleteJobOffer = (props) => {
                 props.onClose();
                 props.onDeleteJobOffer(
                 props.indexJobOffer,
-                props.jobOffer.id
+                props.jobOffer.idJobOffer
                 );
             }}
             className='cancelButton'

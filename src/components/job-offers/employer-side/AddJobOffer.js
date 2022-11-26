@@ -3,7 +3,8 @@ import { Modal,
     Grid,
     Card,
     TextField,
-    Button
+    Button,
+    Container
  } from "@mui/material";
 
 const AddJobOffer = (props) => {
@@ -15,8 +16,7 @@ const AddJobOffer = (props) => {
         place: '',
         numberPositions: 0,
         remuneration: 0,
-        publishingDate: '',
-        idEmployer: 'props.idEmployer'
+        publishingDate: ''
     });
 
     
@@ -80,14 +80,9 @@ const AddJobOffer = (props) => {
 
     return (
         <Modal  open={props.open} onClose={props.onClose}>
-            <Grid
-                container
-                spacing={24}
-                justify="center"
-                style={{ minHeight: '100vh', maxWidth: '100%' }}
-                >
-                    <Grid item xs={3} align="center">
-  
+
+            <Container>
+
                 <Card>
                     <h1>Création d'une offre d'emploi</h1>
                     {error && <p className="red">Veuillez remplir tous les champs</p>}
@@ -135,6 +130,8 @@ const AddJobOffer = (props) => {
                                 onChange={handleChange}
                                 />
                             </div>
+                        </div>
+                        <div className='col-5'>
                             <div className="row">
                                 <TextField 
                                 id="standard-basic" 
@@ -188,9 +185,8 @@ const AddJobOffer = (props) => {
                         </Button>
                     </div>
                 </Card>
-                </Grid>
+                </Container>
 
-            </Grid>
         </Modal>
     )
 }
