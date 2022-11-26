@@ -3,6 +3,7 @@ import {
     MdModeEdit
 } from "@mui/material";
 function JobOffer(props) {
+    const onViewModeOnly = props.onViewModeOnly
     return (
       <li
         onClick={() => {
@@ -10,8 +11,10 @@ function JobOffer(props) {
         }}
       >
         <div>
+          <div className="col-5">
           <h3 >{props.jobOffer.title} - {props.jobOffer.place}</h3>
-          <div>
+          </div>
+          {!onViewModeOnly && <div className="col-5">
             <Button
               className='addButton'
               onClick={(e) => {
@@ -30,7 +33,7 @@ function JobOffer(props) {
             >
                 Supprimer
             </Button>
-          </div>
+          </div>}
         </div>
       </li>
     );
