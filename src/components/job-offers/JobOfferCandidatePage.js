@@ -3,8 +3,10 @@ import { useState, useUser, useEffect } from "react";
 import jobOfferService from "../../services/jobOfferService";
 import JobOfferList from "./JobOfferList";
 import JobOfferDetail from "./JobOfferDetail";
+import { useTranslation } from "react-i18next";
 
 const JobOfferCandidatePage = (props) => {
+    const {t} = useTranslation();
     const user = {
         id: props.accountId
     }
@@ -35,7 +37,7 @@ const JobOfferCandidatePage = (props) => {
 
     return (
         <Fragment>
-            <h1>Toutes les offres d'emploi</h1>
+            <h1>{t('ALL_JOB_OFFERS')}</h1>
             {onViewJobOffer && (
             <JobOfferDetail
               onClose={hideViewJobOfferPanel}

@@ -46,6 +46,25 @@
     "SURE_DELETE_RATING":"Etes vous sûr de vouloir supprimer la note ?",
     "DELETE":"Supprimer",
     "CLOSE":"Fermer",
-    "JOB_OFFERS": "Offres d'emploi"
-
+    "JOB_OFFERS": "Offres d'emploi",
+    "MY_JOB_OFFERS": "Mes offres d'emploi",
+    "ADD_JOB_OFFER": "Ajouter une offre d'emploi",
+    "NO_JOB_OFFER_AVAILABLE": "Aucune offre d'emploi disponible",
+    "EDIT": "Modifier",
+    "DELETE": "Supprimer",
+    "TITLE": "Titre",
+    "DESCRIPTION": "Description",
+    "BEGINNING_DATE": "Date de début",
+    "ENDING_DATE": "Date de fin",
+    "PLACE": "Lieu",
+    "NUMBER_POSITIONS": "Nombre de postes",
+    "REMUNERATION": "Rémunération",
+    "PUBLISHING_DATE": "Date de publication",
+    "ALL_JOB_OFFERS": "Toutes les offres d'emploi",
+    "CREATE_JOB_OFFER": "Création d'une offre d'emploi",
+    "MODIFY_JOB_OFFER": "Modification d'une offre d'emploi",
+    "CONFIRM": "Confirmer",
+    "CANCEL": "Annuler",
+    "PLEASE_FILL_FIELDS": "Veuillez remplir tous les champs",
+    "CONFIRM_DELETE_JOB_OFFER": "Voulez vous vraiment supprimer cette offre d'emploi ?"
 }

@@ -1,14 +1,16 @@
 import { List, ListItem } from "@mui/material";
 import JobOffer from "./JobOffer";
 import { Fragment } from "react";
+import { useTranslation } from "react-i18next";
 
 const JobOfferList = (props) => {
+    const {t} = useTranslation();
     const onViewModeOnly = props.onViewModeOnly
 
     return (
         <List>
             {props.jobOfferList.length === 0 && (
-                <p>Aucune offre d'emploi</p>
+                <p>{t('NO_JOB_OFFER_AVAILABLE')}</p>
             )}
             {props.jobOfferList.length !== 0 &&
                 props.jobOfferList.map((jobOffer, index) => (

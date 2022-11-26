@@ -3,7 +3,9 @@ import {
     ListItem,
     MdModeEdit
 } from "@mui/material";
+import { useTranslation } from "react-i18next";
 function JobOffer(props) {
+    const {t} = useTranslation();
     const onViewModeOnly = props.onViewModeOnly
     return (
       <ListItem
@@ -23,7 +25,7 @@ function JobOffer(props) {
                 props.onEditJobOffer(props.jobOffer, props.index);
               }}
             >
-                Modifier
+                {t('EDIT')}
             </Button>
             <Button
               className='addButton'
@@ -32,7 +34,7 @@ function JobOffer(props) {
                 props.onDeleteJobOffer(props.index, props.jobOffer);
               }}
             >
-                Supprimer
+                {t('DELETE')}
             </Button>
           </div>}
         </div>

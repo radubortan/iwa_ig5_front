@@ -8,8 +8,10 @@ import AddJobOffer from "./employer-side/AddJobOffer"
 import EditJobOffer from "./employer-side/EditJobOffer"
 import DeleteJobOffer from "./employer-side/DeleteJobOffer"
 import jobOfferService from "../../services/jobOfferService";
+import { useTranslation } from "react-i18next";
 
 const JobOfferEmployerPage = (props) => {
+    const {t} = useTranslation();
     const user = {
         id: props.accountId
     }
@@ -108,11 +110,11 @@ const JobOfferEmployerPage = (props) => {
 
     return (
         <div>
-            <h1>Mes offres d'emploi</h1>
+            <h1>{t('MY_JOB_OFFERS')}</h1>
             <Button
                 onClick={showAddJobOfferPanel}
             >
-                Ajouter une offre d'emploi
+               {t('ADD_JOB_OFFER')}
             </Button>
             {onAddJobOffer && (
             <AddJobOffer
