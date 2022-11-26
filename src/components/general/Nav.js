@@ -50,6 +50,11 @@ const Nav = () => {
                             {t('HOME')}
                         </a>
                     </li>
+                    <li className='nav-item '>
+                        <a className='nav-link' href='/job-offer'>
+                            {t('JOB_OFFERS')}
+                        </a>
+                    </li>
                 </ul>
                 <ul className='navbar-nav'>
                     <li className='nav-item dropdown'>

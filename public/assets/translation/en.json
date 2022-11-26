@@ -45,5 +45,6 @@
     "MY_RATING":"My rating",
     "SURE_DELETE_RATING":"Are you sure you want to delete your rating?",
     "DELETE":"Delete",
-    "CLOSE":"Close"
+    "CLOSE":"Close",
+    "JOB_OFFERS": "Job Offers"
 }

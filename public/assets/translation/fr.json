@@ -45,5 +45,7 @@
     "MY_RATING":"Ma note",
     "SURE_DELETE_RATING":"Etes vous sûr de vouloir supprimer la note ?",
     "DELETE":"Supprimer",
-    "CLOSE":"Fermer"
+    "CLOSE":"Fermer",
+    "JOB_OFFERS": "Offres d'emploi"
+
 }

@@ -1,5 +1,6 @@
 import { List, ListItem } from "@mui/material";
 import JobOffer from "./JobOffer";
+import { Fragment } from "react";
 
 const JobOfferList = (props) => {
     const onViewModeOnly = props.onViewModeOnly
@@ -11,7 +12,7 @@ const JobOfferList = (props) => {
             )}
             {props.jobOfferList.length !== 0 &&
                 props.jobOfferList.map((jobOffer, index) => (
-                <ListItem disablePadding>
+                <Fragment>
                     {!onViewModeOnly && <JobOffer
                         key={jobOffer.idJobOffer}
                         index={index}
@@ -28,7 +29,7 @@ const JobOfferList = (props) => {
                         onViewModeOnly
                     />}
                     
-                </ListItem>
+                </Fragment>
                 ))
             }
         </List>

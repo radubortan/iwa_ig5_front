@@ -10,9 +10,8 @@ import DeleteJobOffer from "./employer-side/DeleteJobOffer"
 import jobOfferService from "../../services/jobOfferService";
 
 const JobOfferEmployerPage = (props) => {
-    //const user = useUser();
     const user = {
-        id: 2
+        id: props.accountId
     }
     const [jobOfferList, setJobOfferList] = useState([])
     const accessToken = "token"
