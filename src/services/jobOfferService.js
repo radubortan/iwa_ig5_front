@@ -1,12 +1,13 @@
 import axios from 'axios';
 
 export default {
-    addJobOffer: (jobOffer, accessToken) => {
+    addJobOffer: (jobOffer, idEmployer, accessToken) => {
         return new Promise((resolve, reject) => {
             axios({
                 method: 'post',
                 url: `http://localhost:8080/api/job-offers`,
-                headers: { Authorization: `Bearer ${accessToken}` },
+                //headers: { Authorization: `Bearer ${accessToken}` },
+                headers: {},
                 data: {
                     title: jobOffer.title,
                     description: jobOffer.description,
@@ -16,7 +17,7 @@ export default {
                     numberPositions: jobOffer.numberPositions,
                     remuneration: jobOffer.remuneration,
                     publishingDate: jobOffer.publishingDate,
-                    idEmployer: jobOffer.idEmployer
+                    idEmployer: idEmployer
                 },
             })
             .then((response) => {
@@ -32,8 +33,9 @@ export default {
         return new Promise((resolve, reject) => {
             axios({
                 method: 'put',
-                url: `http://localhost:8080/api/job-offers/${jobOffer.id}`,
-                headers: { Authorization: `Bearer ${accessToken}` },
+                url: `http://localhost:8080/api/job-offers/${jobOffer.idJobOffer}`,
+                //headers: { Authorization: `Bearer ${accessToken}` },
+                headers: {},
                 data: {
                     title: jobOffer.title,
                     description: jobOffer.description,
@@ -59,7 +61,8 @@ export default {
             axios({
                 method: 'delete',
                 url: `http://localhost:8080/api/job-offers/${idJobOffer}`,
-                headers: { Authorization: `Bearer ${accessToken}` },
+                //headers: { Authorization: `Bearer ${accessToken}` },
+                headers: {},
                 data: {},
             })
                 .then((response) => {
@@ -76,7 +79,8 @@ export default {
             axios({
                 method: 'get',
                 url: `http://localhost:8080/api/job-offers`,
-                headers: { Authorization: `Bearer ${accessToken}` },
+                //headers: { Authorization: `Bearer ${accessToken}` },
+                headers: {},
                 data: {},
             })
                 .then((response) => {
@@ -92,7 +96,8 @@ export default {
             axios({
                 method: 'get',
                 url: `http://localhost:8080/api/job-offers/${idJobOffer}`,
-                headers: { Authorization: `Bearer ${accessToken}` },
+                //headers: { Authorization: `Bearer ${accessToken}` },
+                headers: {},
                 data: {},
             })
                 .then((response) => {
@@ -109,7 +114,8 @@ export default {
             axios({
                 method: 'get',
                 url: `http://localhost:8080/api/job-offers/employer/${idEmployer}`,
-                headers: { Authorization: `Bearer ${accessToken}` },
+                //headers: { Authorization: `Bearer ${accessToken}` },
+                headers: {},
                 data: {},
             })
                 .then((response) => {
