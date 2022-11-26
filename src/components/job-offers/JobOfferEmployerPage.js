@@ -147,7 +147,7 @@ const JobOfferEmployerPage = (props) => {
               jobOffer={onViewJobOffer}
             />
             )}
-            <JobOfferList 
+            <JobOfferList
             jobOfferList={jobOfferList}
             onViewJobOffer={showViewJobOfferPanel}
             onEditJobOffer={showEditJobOfferPanel}
