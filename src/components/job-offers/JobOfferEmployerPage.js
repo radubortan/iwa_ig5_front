@@ -1,6 +1,8 @@
 import { useState, useUser, useEffect } from "react";
 import {
-    Button
+    Button,
+    Typography,
+    Box
 } from "@mui/material";
 import JobOfferDetail from "./JobOfferDetail";
 import JobOfferList from "./JobOfferList";
@@ -110,9 +112,13 @@ const JobOfferEmployerPage = (props) => {
 
     return (
         <div>
-            <h1>{t('MY_JOB_OFFERS')}</h1>
+            <Typography component='h1' variant='h4'>
+                <Box fontWeight="bold" display='inline' by={10}>
+                    {t('MY_JOB_OFFERS')}
+                </Box>
+            </Typography>
             <Button
-                onClick={showAddJobOfferPanel}
+                onClick={showAddJobOfferPanel} my={2}
             >
                {t('ADD_JOB_OFFER')}
             </Button>
