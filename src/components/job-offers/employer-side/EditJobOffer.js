@@ -4,9 +4,15 @@ import { Modal,
     Card,
     TextField,
     Button,
-    Container
+    Container,
+    Box,
+    Typography
  } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+
 
 const EditJobOffer = (props) => {
     const {t} = useTranslation();
@@ -83,14 +89,25 @@ const EditJobOffer = (props) => {
 
     return (
         <Modal  open={props.open} onClose={props.onClose}>
-            <Container>
-  
-                <Card>
-                    <h1>{t('MODIFY_JOB_OFFER')}</h1>
-                    {error && <p className="red">{t('PLEASE_FILL_FIELDS')}</p>}
-                    <form method='post' onSubmit={updateJobOffer}>
-                        <div className='col-5'>
-                            <div className="row">
+        <Container component='main' maxWidth='xs'>
+            <Box
+                sx={{
+                    marginTop: 8,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    backgroundColor: "whitesmoke"
+                }}
+            >  
+            <Typography component='h1' variant='h5'>
+                <Box fontWeight="bold" display='inline' mt={3}>
+                    {t('MODIFY_JOB_OFFER')}
+                </Box>
+            </Typography> 
+            {error && <p className="red">{t('PLEASE_FILL_FIELDS')}</p>}
+            <form method='post' onSubmit={updateJobOffer}>
+            <Grid item xs={6}> 
+                        <Grid item xs={12} py={1}>
                                 <TextField 
                                 id="standard-basic" 
                                 name="title"
@@ -99,53 +116,94 @@ const EditJobOffer = (props) => {
                                 value={updatedJobOffer.title}
                                 onChange={handleChange}
                                 />
-                            </div>
-                            <div className="row">
+                            </Grid>
+                            <Grid item xs={12} py={1}>
                                 <TextField 
-                                multiline
-                                maxRows={5}
-                                id="standard-basic" 
-                                name="description"
-                                label={t('DESCRIPTION')} 
-                                variant="standard" 
-                                value={updatedJobOffer.description}
-                                onChange={handleChange}
+                                    multiline
+                                    maxRows={4}
+                                    id="standard-basic" 
+                                    name="description"
+                                    label={t('DESCRIPTION')}
+                                    variant="standard" 
+                                    value={updatedJobOffer.description}
+                                    onChange={handleChange}
                                 />
-                            </div>
-                            <div className="row">
-                                <p>{t('BEGINNING_DATE')}</p>
-                                <TextField
-                                type="date"
-                                name="beginningDate"
-                                label=""
-                                value={updatedJobOffer.beginningDate}
-                                onChange={handleChange}
+                            </Grid>
+                            <Grid item xs={12} py={1}>
+                            <LocalizationProvider
+                                dateAdapter={AdapterDayjs}
+                            >
+                                <DatePicker
+                                    inputFormat='DD/MM/YYYY'
+                                    label={t('BEGINNING_DATE')}
+                                    name="beginningDate"
+                                    value={updatedJobOffer.beginningDate}
+                                    onChange={(newDate) => {
+                                        const e = {
+                                            target : {
+                                                name: "beginningDate",
+                                                value: newDate
+                                            }
+                                        }
+                                        handleChange(e)
+                                    }}
+                                        
+                                    renderInput={(params) => (
+                                        <TextField
+                                            {...params}
+                                            fullWidth
+                                            style={{
+                                                borderRadius: '5px'
+                                            }}
+                                        />
+                                    )}
                                 />
-                            </div>
-                            <div className="row">
-                                <p>{t('ENDING_DATE')}</p>
-                                <TextField
-                                type="date"
-                                name="endingDate"
-                                label=""
-                                value={updatedJobOffer.endingDate}
-                                onChange={handleChange}
+                                </LocalizationProvider>
+                            </Grid>
+                            <Grid item xs={12} py={1}>
+                            <LocalizationProvider
+                                dateAdapter={AdapterDayjs}
+                            >
+                                <DatePicker
+                                    inputFormat='DD/MM/YYYY'
+                                    label={t('ENDING_DATE')}
+                                    name="endingDate"
+                                    value={updatedJobOffer.endingDate}
+                                    onChange={(newDate) => {
+                                        const e = {
+                                            target : {
+                                                name: "endingDate",
+                                                value: newDate
+                                            }
+                                        }
+                                        handleChange(e)
+                                    }}
+                                    renderInput={(params) => (
+                                        <TextField
+                                            {...params}
+                                            fullWidth
+                                            style={{
+                                                borderRadius: '5px'
+                                            }}
+                                        />
+                                    )}
                                 />
-                            </div>
-                        </div>
-                        <div className="col-5">
-                            <div className="row">
-                                <TextField 
+                            </LocalizationProvider>
+                        </Grid>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <Grid item xs={12} py={1}>
+                            <TextField 
                                 id="standard-basic" 
                                 name="place"
                                 label={t('PLACE')}
                                 variant="standard"
                                 value={updatedJobOffer.place}
                                 onChange={handleChange}
-                                />
-                            </div>
-                            <div className="row">
-                                <TextField 
+                            />
+                        </Grid>
+                        <Grid item xs={12} py={1}>
+                            <TextField 
                                 id="standard-basic" 
                                 name="numberPositions"
                                 label={t('NUMBER_POSITIONS')}
@@ -153,10 +211,10 @@ const EditJobOffer = (props) => {
                                 type="number"
                                 value={updatedJobOffer.numberPositions}
                                 onChange={handleChange}
-                                />
-                            </div>
-                            <div className="row">
-                                <TextField 
+                            />
+                        </Grid>
+                        <Grid item xs={12} py={1}>
+                            <TextField 
                                 id="standard-basic"
                                 name="remuneration"
                                 label={t('REMUNERATION')}
@@ -164,30 +222,52 @@ const EditJobOffer = (props) => {
                                 type="number"
                                 value={updatedJobOffer.remuneration}
                                 onChange={handleChange}
+                            />
+                        </Grid>
+                        <Grid item xs={12} py={1}>
+                            <LocalizationProvider
+                                dateAdapter={AdapterDayjs}
+                            >
+                                <DatePicker
+                                    inputFormat='DD/MM/YYYY'
+                                    label={t('PUBLISHING_DATE')}
+                                    name="publishingDate"
+                                    value={updatedJobOffer.publishingDate}
+                                    onChange={(newDate) => {
+                                        const e = {
+                                            target : {
+                                                name: "publishingDate",
+                                                value: newDate
+                                            }
+                                        }
+                                        handleChange(e)
+                                    }}
+                                    renderInput={(params) => (
+                                        <TextField
+                                            {...params}
+                                            fullWidth
+                                            style={{
+                                                borderRadius: '5px'
+                                            }}
+                                        />
+                                    )}
                                 />
-                            </div>
-                            <div className="row">
-                                <p>{t('PUBLISHING_DATE')}</p>
-                                <TextField
-                                type="date"
-                                name="publishingDate"
-                                label=""
-                                value={updatedJobOffer.publishingDate}
-                                onChange={handleChange}
-                                />
-                            </div>
-                        </div>  
-                    </form>
-                    <div>
-                        <Button onClick={updateJobOffer}>
-                            {t('CONFIRM')}
-                        </Button>
-                        <Button onClick={props.onClose}>
-                            {t('CANCEL')}
-                        </Button>
-                    </div>
-                </Card>
-               </Container>
+                            </LocalizationProvider>
+                        </Grid>
+                    </Grid>  
+            </form>
+            <div>
+                <Button onClick={updateJobOffer}>
+                    {t('CONFIRM')}
+                </Button>
+                <Button onClick={props.onClose}>
+                    {t('CANCEL')}
+                </Button>
+            </div>
+            </Box>
+            </Container>
+                        
+            
         </Modal>
     )
 }
