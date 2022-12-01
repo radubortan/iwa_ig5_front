@@ -20,11 +20,14 @@ const Upload = () => {
     const [cvExist, setCvExist] = useState(false);
     const [fileURLCV, setFileURLCV] = useState();
     const [emptyKeyword, setEmptyKeyword] = useState(false)
+    const [wasSendKeyword, setWasSendKeyword] = useState(false)
+    const [keywordStatus, setKeywordStatus] = useState(false)
 
     useEffect(() => {
         //A changer avec un appel d'un service qui retourne le nom du fichier associé à l'id du profil
         setNameFileCV("CV_Vincent_Baret.pdf");
         fetchCV(nameFileCV);
+        fetchKeywords();
     }, [nameFileCV])
 
     const handleChangeFile = (event) => {
@@ -70,6 +73,44 @@ const Upload = () => {
         let index = listKeywords.indexOf(name)
         list.splice(index, 1)
         setListKeywords(list)
+    }
+
+    const sendKeywords = () => {
+        setLoading(true)
+        let data = listKeywords.join(";")
+        console.log(data)
+        axios.post(`http://localhost:8080/cv-keywords/${12}?keywords=${data}`)
+            .then(res => {
+                if(res.data){
+                    setLoading(false)
+                    console.log("success")
+                    setKeywordStatus(true)
+                }
+            })
+            .catch(err => {
+                setLoading(false)
+                console.log(err)
+                setKeywordStatus(false)
+            })
+        setWasSendKeyword(true)
+    } 
+
+    function fetchKeywords() {
+        setLoading(true)
+        axios.get(`http://localhost:8080/get-cv-keywords/${12}`)
+            .then(res => {
+                if(res.data) {
+                    console.log("success")
+                    const dataKeywords = res.data
+                    const list = dataKeywords.split(";")
+                    setListKeywords(list)
+                    setLoading(false)
+                } 
+            })
+            .catch(err => {
+                console.log(err)
+                setLoading(false)
+            })
     }
 
     function fetchCV(fileName) {
@@ -145,6 +186,17 @@ const Upload = () => {
                             )
                         })}
                     </ul>
+                    {listKeywords.length > 0 && 
+                        <div>
+                            <div>
+                            <Button onClick={sendKeywords}>Submit</Button>
+                            </div>
+                            {wasSendKeyword && <div>
+                                {keywordStatus ? <p style={{color: 'green'}}>Keywords successfully sent</p> 
+                                : <p style={{color: 'red'}}>Error while sending keywords</p>}
+                            </div>}
+                        </div>
+                    }
                 </div>
 
             </div>
