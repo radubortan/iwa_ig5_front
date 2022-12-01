@@ -46,8 +46,7 @@ const JobOfferEmployerPage = (props) => {
     const addJobOffer = async (newJobOffer) => {
         let response = await jobOfferService.addJobOffer(newJobOffer, user.id, accessToken);
         if(response){
-            newJobOffer.idJobOffer = response.idJobOffer;
-            setJobOfferList([...jobOfferList, newJobOffer]);
+            setJobOfferList([...jobOfferList, response]);
         }
     };
 
