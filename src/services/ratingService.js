@@ -5,7 +5,7 @@ const getUserRatings = (idUser, accessToken) => {
     return new Promise((resolve, reject) => {
         axios({
             method: 'get',
-            url: `http://localhost:8081/api/ratings/${idUser}`,
+            url: `http://localhost:8080/api/ratings/${idUser}`,
             headers: { Authorization: `Bearer ${accessToken}` },
             data: {},
         })
@@ -23,7 +23,7 @@ export default {
         return new Promise((resolve, reject) => {
             axios({
                 method: 'post',
-                url: 'http://localhost:8081/api/ratings/new',
+                url: 'http://localhost:8080/api/ratings/new',
                 headers: { Authorization: `Bearer ${accessToken}` },
                 data: {
                     id: rating.id,
@@ -44,7 +44,7 @@ export default {
         return new Promise((resolve, reject) => {
             axios({
                 method: 'delete',
-                url: `http://localhost:8081/api/ratings/delete/${idRating}`,
+                url: `http://localhost:8080/api/ratings/delete/${idRating}`,
                 headers: { Authorization: `Bearer ${accessToken}` },
                 data: {},
             })
@@ -117,7 +117,7 @@ export default {
         return new Promise((resolve, reject) => {
             axios({
                 method: 'get',
-                url: `http://localhost:8081/api/ratings/${idSender}/${idReceiver}`,
+                url: `http://localhost:8080/api/ratings/${idSender}/${idReceiver}`,
                 headers: { Authorization: `Bearer ${accessToken}` },
                 data: {},
             })

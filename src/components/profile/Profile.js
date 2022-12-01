@@ -126,7 +126,7 @@ const Profile = () => {
                             variant='contained'
                             onClick={() => {
                                 // TO DO: navigate to the CV page
-                                navigate('/');
+                                navigate('/profile/cv/'+ user.accountId);
                             }}
                         >
                             {t('SEE_CV')}

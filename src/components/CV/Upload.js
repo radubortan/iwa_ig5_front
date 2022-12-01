@@ -3,11 +3,16 @@ import { TextField } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useUser } from '../../context/UserContext';
+
 
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
 const Upload = () => {
+
+    const user = useUser();
+    const role = user.accountType
 
     const [loading, setLoading] = useState(false);
     const [uploaded, setUploaded] = useState(false);
@@ -25,10 +30,21 @@ const Upload = () => {
 
     useEffect(() => {
         //A changer avec un appel d'un service qui retourne le nom du fichier associé à l'id du profil
-        setNameFileCV("CV_Vincent_Baret.pdf");
+        fetchFileName();
         fetchCV(nameFileCV);
         fetchKeywords();
     }, [nameFileCV])
+
+    function fetchFileName() {
+        axios.get(`http://localhost:8080/api/cvs/get-filename/${user.accountId}`)
+            .then(res => {
+                setNameFileCV(res.data)
+                console.log(res.data)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
 
     const handleChangeFile = (event) => {
         event.preventDefault();
@@ -39,7 +55,7 @@ const Upload = () => {
         formData.append("file", file);
 
         // ID à remplacer
-        axios.post(`http://localhost:8080/cv-upload/${12}`, formData)
+        axios.post(`http://localhost:8080/api/cvs/cv-upload/${user.accountId}`, formData)
             .then(res => {
                 if (res.data) {
                     setLoading(false);
@@ -79,7 +95,7 @@ const Upload = () => {
         setLoading(true)
         let data = listKeywords.join(";")
         console.log(data)
-        axios.post(`http://localhost:8080/cv-keywords/${12}?keywords=${data}`)
+        axios.post(`http://localhost:8080/api/cvs/cv-keywords/${user.accountId}?keywords=${data}`)
             .then(res => {
                 if(res.data){
                     setLoading(false)
@@ -97,7 +113,7 @@ const Upload = () => {
 
     function fetchKeywords() {
         setLoading(true)
-        axios.get(`http://localhost:8080/get-cv-keywords/${12}`)
+        axios.get(`http://localhost:8080/api/cvs/get-cv-keywords/${user.accountId}`)
             .then(res => {
                 if(res.data) {
                     console.log("success")
@@ -114,7 +130,7 @@ const Upload = () => {
     }
 
     function fetchCV(fileName) {
-        axios.get(`http://localhost:8080/cv-view?fileName=${fileName}`, { responseType: 'blob' })
+        axios.get(`http://localhost:8080/api/cvs/cv-view?fileName=${fileName}`, { responseType: 'blob' })
             .then(res => {
                 const blob = new Blob(
                     [res.data],
@@ -130,9 +146,9 @@ const Upload = () => {
     }
 
     function deleteCV() {
-        console.log(nameFileCV);
+        fetchFileName();
         // Changer l'ID
-        axios.get(`http://localhost:8080/cv-delete/${12}?fileName=${nameFileCV}`)
+        axios.get(`http://localhost:8080/api/cvs/cv-delete/${user.accountId}?fileName=${nameFileCV}`)
             .then(res => {
                 console.log(res.data);
                 setUploaded(false);
@@ -166,6 +182,24 @@ const Upload = () => {
 
                     <p style={{ color: 'grey', fontSize: '15px', marginTop: '30px' }}>Fichier PDF uniquement</p>
                 </div>
+            </div>
+        )
+    } else {
+        return (
+            <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center'
+            }}>
+                <Button onClick={() => { window.open(fileURLCV) }} style={{ marginTop: '8em' }} variant="contained" component="label">Voir mon CV</Button>
+                <Button
+                    onClick={() => deleteCV()}
+                    variant="outlined"
+                    startIcon={<DeleteIcon />}
+                    style={{ marginTop: '4em', color: 'red', borderColor: 'red' }}
+                >
+                    Supprimer mon CV
+                </Button>
 
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '40px' }}>
                     <p style={{ fontSize: '20px', width: '60%' }}>Pour pouvoir obtenir des offres d'emploi pertinentes, veuillez choisir des <strong>mots-clés</strong> qui définissent au mieux votre CV :</p>
@@ -198,25 +232,6 @@ const Upload = () => {
                         </div>
                     }
                 </div>
-
-            </div>
-        )
-    } else {
-        return (
-            <div style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center'
-            }}>
-                <Button onClick={() => { window.open(fileURLCV) }} style={{ marginTop: '8em' }} variant="contained" component="label">Voir mon CV</Button>
-                <Button
-                    onClick={() => deleteCV()}
-                    variant="outlined"
-                    startIcon={<DeleteIcon />}
-                    style={{ marginTop: '4em', color: 'red', borderColor: 'red' }}
-                >
-                    Supprimer mon CV
-                </Button>
             </div>
         )
     }

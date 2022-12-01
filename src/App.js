@@ -9,6 +9,8 @@ import NotFound from './components/general/NotFound';
 import Profile from './components/profile/Profile';
 import ProfileEdit from './components/profile/ProfileEdit';
 import JobOfferPage from './components/job-offers/JobOfferPage';
+import Upload from './components/CV/Upload';
+
 
 function App() {
     const user = useUser();
@@ -43,6 +45,7 @@ function App() {
                 <Route path='/profile/:id' element={<Profile />} />
                 <Route path='/profile/edit' element={<ProfileEdit />} />
                 <Route path='/job-offer' element={<JobOfferPage/>}/>
+                <Route path='/profile/cv/:id' element={<Upload/>}/>
                 <Route path='*' element={<NotFound />} />
             </Routes>
         </div>
