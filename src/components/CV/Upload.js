@@ -12,11 +12,14 @@ const Upload = () => {
     const [loading, setLoading] = useState(false);
     const [uploaded, setUploaded] = useState(false);
     const [displayError, setDisplayError] = useState(false);
+    const [listKeywords, setListKeywords] = useState([]);
+    const [keyword, setKeyword] = useState("")
 
     //If a job seeker already uploaded a CV
     const [nameFileCV, setNameFileCV] = useState("");
     const [cvExist, setCvExist] = useState(false);
     const [fileURLCV, setFileURLCV] = useState();
+    const [emptyKeyword, setEmptyKeyword] = useState(false)
 
     useEffect(() => {
         //A changer avec un appel d'un service qui retourne le nom du fichier associé à l'id du profil
@@ -49,12 +52,32 @@ const Upload = () => {
             })
     }
 
-    function fetchCV(fileName){
-        axios.get(`http://localhost:8080/cv-view?fileName=${fileName}`, {responseType: 'blob'})
+    const addKeywords = (event) => {
+        if(keyword.length !== 0 && keyword.trim().length !== 0) {
+            event.preventDefault()
+            setKeyword("")
+            let list = [...listKeywords]
+            list.push(keyword)
+            console.log(list)
+            setListKeywords(list)
+        } else {
+            setEmptyKeyword(true)
+        }
+    }
+
+    const suppressKeyword = (name) => {
+        let list = [...listKeywords]
+        let index = listKeywords.indexOf(name)
+        list.splice(index, 1)
+        setListKeywords(list)
+    }
+
+    function fetchCV(fileName) {
+        axios.get(`http://localhost:8080/cv-view?fileName=${fileName}`, { responseType: 'blob' })
             .then(res => {
                 const blob = new Blob(
                     [res.data],
-                    {type: 'application/pdf'}
+                    { type: 'application/pdf' }
                 );
                 var fileURL = URL.createObjectURL(blob);
                 setFileURLCV(fileURL);
@@ -104,8 +127,24 @@ const Upload = () => {
                 </div>
 
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '40px' }}>
-                    <p style={{ fontSize: '20px', width: '60%' }}>Pour pouvoir obtenir des offres d'emploi pertinentes, veuillez choisir <strong>3 mots-clés</strong> qui définissent au mieux votre CV :</p>
-                    <TextField style={{ marginTop: '30px' }} id="outlined-basic" label="Mot-clé" variant="outlined" />
+                    <p style={{ fontSize: '20px', width: '60%' }}>Pour pouvoir obtenir des offres d'emploi pertinentes, veuillez choisir des <strong>mots-clés</strong> qui définissent au mieux votre CV :</p>
+                    <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                        <TextField value={keyword} onChange={(event) => { setKeyword(event.target.value); setEmptyKeyword(false) }} style={{ marginTop: '30px' }} id="outlined-basic" label="Mot-clé" variant="outlined" />
+                        <Button style={{ marginTop: '25px' }} variant="contained" onClick={addKeywords}>Envoyer</Button>
+                    </div>
+                    {emptyKeyword === true && <p style={{color: 'red'}}>Cannot be empty</p>}
+                    <ul style={{ display: 'flex', flexDirection: 'column', marginTop: '30px', gap: '10px', listStyleType: 'none' }}>
+                        {listKeywords.map(function (name, index) {
+                            return (
+                                <div key={index} style={{display: 'flex', gap: '20px', alignItems: 'center'}}>
+                                    <li style={{fontSize: '20px'}}>{name}</li>
+                                    <Button onClick={() => suppressKeyword(name)} style={{color: 'red', borderColor: 'red'}} variant="outlined" startIcon={<DeleteIcon />}>
+                                        Supprimer
+                                    </Button>
+                                </div>
+                            )
+                        })}
+                    </ul>
                 </div>
 
             </div>
@@ -117,14 +156,14 @@ const Upload = () => {
                 flexDirection: 'column',
                 alignItems: 'center'
             }}>
-                <Button onClick={() => {window.open(fileURLCV)}} style={{ marginTop: '8em' }} variant="contained" component="label">Voir mon CV</Button>
-                <Button 
+                <Button onClick={() => { window.open(fileURLCV) }} style={{ marginTop: '8em' }} variant="contained" component="label">Voir mon CV</Button>
+                <Button
                     onClick={() => deleteCV()}
                     variant="outlined"
                     startIcon={<DeleteIcon />}
-                    style={{marginTop: '4em', color: 'red', borderColor: 'red'}}
-                    >
-                        Supprimer mon CV
+                    style={{ marginTop: '4em', color: 'red', borderColor: 'red' }}
+                >
+                    Supprimer mon CV
                 </Button>
             </div>
         )
