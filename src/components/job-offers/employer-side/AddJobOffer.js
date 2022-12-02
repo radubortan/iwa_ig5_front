@@ -27,7 +27,6 @@ const AddJobOffer = (props) => {
     });
 
     const handleChange = (e) => {
-        console.log(e)
         const value = e.target.value;
         setNewJobOffer({
             ...newJobOffer,
@@ -45,26 +44,32 @@ const AddJobOffer = (props) => {
             setError(true)
             isValid = false;
         }
+
         if (newJobOffer.description.trim() === '') {
             setError(true)
             isValid = false;
         }
+
         if(newJobOffer.beginningDate == ''){
             setError(true)
             isValid = false;
         }
+
         if(newJobOffer.endingDate == ''){
             setError(true)
             isValid = false;
         }
+
         if(newJobOffer.place.trim() == ''){
             setError(true)
             isValid = false;
         }
-        if(newJobOffer.numberPositions > 0){
+
+        if(newJobOffer.numberPositions.trim() == ''){
             setError(true)
             isValid = false;
         }
+
         if(newJobOffer.publishingDate == ''){
             setError(true)
             isValid = false;
@@ -74,6 +79,9 @@ const AddJobOffer = (props) => {
 
     const saveJobOffer = (e) => {
         e.preventDefault();
+
+
+
         // Validation
         if (isValid()) {
             props.onClose();
